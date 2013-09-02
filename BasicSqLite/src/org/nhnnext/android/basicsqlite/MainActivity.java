@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -33,6 +34,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	private ListView mainListView1;
 	
+	
+	private static final String TABLE_NAME = "articles";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +69,42 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch(view.getId()) {
 		case R.id.mainButtonTableCreate:
+			if(isTableExist()) {
+				toaster("테이블이 이미 만들어져 있습니다.");
+				return;
+			}
 			tableCreate();
 			listRefresh();
 			break;
 		case R.id.mainButtonTableDrop:
+			if(!isTableExist()) {
+				toaster("테이블이 없습니다. 테이블을 만들어주세요.");
+				return;
+			}
 			tableDrop();
-			//listRefresh();
+			listRefresh();
 			break;
 		case R.id.mainButtonInsert:
+			if(!isTableExist()) {
+				toaster("테이블이 없습니다. 테이블을 만들어주세요.");
+				return;
+			}
 			columnInsert();
 			listRefresh();
 			break;
 		case R.id.mainButtonUpdate:
+			if(!isTableExist()) {
+				toaster("테이블이 없습니다. 테이블을 만들어주세요.");
+				return;
+			}
 			columnUpdate();
 			listRefresh();
 			break;
 		case R.id.mainButtonDelete:
+			if(!isTableExist()) {
+				toaster("테이블이 없습니다. 테이블을 만들어주세요.");
+				return;
+			}
 			columnDelete();
 			listRefresh();
 			break;
@@ -100,25 +123,33 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	private void tableCreate() {
 		toaster("테이블을 생성합니다.");
-		String sql = "create table articles(_id integer primary key autoincrement, Title text not null);";
+		String sql = "create table " + TABLE_NAME + "(_id integer primary key autoincrement, Title text not null);";
 		database1.execSQL(sql);
 	}
 	
 	
 	private void tableDrop() {
 		toaster("테이블을 삭제합니다.");
-		String sql = "DROP TABLE IF EXISTS articles;";
+		String sql = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 		database1.execSQL(sql);
 	}
 	
 	
 	private void columnInsert() {
 		String insertData = mainEditTextInsert.getText().toString();
-		toaster("데이터를 추가합니다.[" + insertData + "]");
+		
+		if("".equals(insertData)) {
+			toaster("추가할 데이터 내용이 없습니다.");
+			return;
+		}
+		
+ 		toaster("데이터를 추가합니다.[" + insertData + "]");
 		
 		ContentValues values = new ContentValues();
 		values.put("Title", insertData);
-		database1.insert("articles", null, values);
+		database1.insert(TABLE_NAME, null, values);
+		
+		mainEditTextInsert.setText("");
 		
 	}
 	
@@ -126,38 +157,57 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void columnUpdate() {
 		String columnNumber = mainEditTextColumnNumber.getText().toString();
 		String updateData = mainEditTextUpdate.getText().toString();
+		
+		if("".equals(columnNumber) || "".equals(updateData)) {
+			toaster("수정할 데이터나 컬럼번호가 없습니다.");
+			return;
+		}
+		
 		toaster("데이터를 수정합니다.[" + columnNumber + "]" + updateData);
 		
 		ContentValues values = new ContentValues();
 		values.put("Title", updateData);
 
-		database1.update("articles", values, "_id=" + columnNumber, null);
+		database1.update(TABLE_NAME, values, "_id=" + columnNumber, null);
+		
+		mainEditTextUpdate.setText("");
 		
 	}
 	
 
 	private void columnDelete() {
 		String columnNumber = mainEditTextColumnNumber.getText().toString();
+		
+		if("".equals(columnNumber)) {
+			toaster("삭제할 데이터의 컬럼 번호가 없습니다.");
+			return;
+		}
+		
 		toaster("데이터를 삭제합니다.[" + columnNumber + "]");
 		
-		database1.delete("articles", "_id=" + columnNumber, null);
+		database1.delete(TABLE_NAME, "_id=" + columnNumber, null);
 		
+		mainEditTextUpdate.setText("");
+		mainEditTextColumnNumber.setText("");
 	}
 	
 	
 	private void listRefresh() {
 		ArrayList<String> list1 = new ArrayList<String>();
-		Cursor cursor = database1.query("articles", null, null, null, null, null, "_id");
 		
-		if (cursor != null) {
-			cursor.moveToFirst();
-			while (!(cursor.isAfterLast())) {
-				list1.add("[" + cursor.getString(0) + "]" + cursor.getString(1));
-				cursor.moveToNext();
+		if(isTableExist()) {
+			Cursor cursor = database1.query(TABLE_NAME, null, null, null, null, null, "_id");
+			
+			if (cursor != null) {
+				cursor.moveToFirst();
+				while (!(cursor.isAfterLast())) {
+					list1.add("[" + cursor.getString(0) + "]" + cursor.getString(1));
+					cursor.moveToNext();
+				}
 			}
-		}
 
-		cursor.close();
+			cursor.close();
+		}
 		
 		if(list1.size() == 0) {
 			toaster("리스트에 표시할 데이터가 없습니다.");
@@ -165,6 +215,23 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		mainListView1.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list1));
 	}
+	
+	
+	
+	private boolean isTableExist() {
+		String searchTable = "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_NAME + "';";
+		Cursor cursor = database1.rawQuery(searchTable, null);
+		
+		if(cursor.getCount()==0) {
+			return false;
+		}
+		
+		cursor.close();
+		
+		return true;
+		
+	}
+	
 	
 	private void toaster(String bread) {
 		Toast toast = Toast.makeText(getApplicationContext(), bread, Toast.LENGTH_SHORT);
