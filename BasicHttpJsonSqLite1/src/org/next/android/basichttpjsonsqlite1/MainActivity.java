@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
 		database1 = openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 		
 		database1.setLocale(Locale.getDefault());
-		database1.setVersion(3);
+		database1.setVersion(1);
 		
 		//테이블이 생성되었는지 확인
 		String searchTable = "select DISTINCT tbl_name from sqlite_master where tbl_name = 'articles';";
