@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_item1"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom|withText"
+        android:title="Add"/>
+    <item
+        android:id="@+id/action_item2"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        android:title="Action item with icon"/>
+    <item
+        android:id="@+id/action_item3"
+        android:title="Normal item"/>
+
+</menu>
