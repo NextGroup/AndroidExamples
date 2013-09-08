@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -24,8 +24,11 @@
         </activity>
         <activity
             android:name="org.nhnnext.android.day4.BasicActionBar"
-            android:label="Basic ActionBar"
-            android:theme="@style/Theme.AppCompat.Light" >
+            android:label="Basic ActionBar" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day4.SherLockSideNavigation"
+            android:label="Sherlock Side Navigation" >
         </activity>
     </application>
 

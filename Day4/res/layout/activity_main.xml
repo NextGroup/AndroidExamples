@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Simple List1" />
+        android:text="Action Bar" />
 
 
     <Button
@@ -33,6 +33,6 @@
         android:layout_alignLeft="@+id/main_button1"
         android:layout_below="@+id/main_button1"
         android:layout_marginTop="24dp"
-        android:text="Simple List2" />
+        android:text="Side Navigation" />
     
 </RelativeLayout>

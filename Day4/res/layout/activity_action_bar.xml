@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="61dp"
-        android:text="상단에 액션바가 생겼습니다."
+        android:text="상단에 액션바가 생겼습니다. \n +마크옆에 공간이 있으면 글씨도 나옵니다 핸드폰을 가로로 해보세요"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     

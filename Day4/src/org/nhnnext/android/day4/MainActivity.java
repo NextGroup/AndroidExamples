@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.main_button2:
 			Intent intentSimpleList2 = new Intent();
-			intentSimpleList2.setClass(MainActivity.this, BasicActionBar.class);
+			intentSimpleList2.setClass(MainActivity.this, SherLockSideNavigation.class);
     		startActivity(intentSimpleList2);
 			break;
 		}
