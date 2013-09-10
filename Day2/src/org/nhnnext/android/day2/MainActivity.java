@@ -34,16 +34,19 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch(view.getId()) {
 		case R.id.main_button1:
+			//simpleList1으로 이동
 			Intent intentSimpleList1 = new Intent();
 			intentSimpleList1.setClass(MainActivity.this, SimpleList1.class);
     		startActivity(intentSimpleList1);
 			break;
 		case R.id.main_button2:
+			//simpleList2로 이동
 			Intent intentSimpleList2 = new Intent();
 			intentSimpleList2.setClass(MainActivity.this, SimpleList2.class);
     		startActivity(intentSimpleList2);
 			break;
 		case R.id.main_button3:
+			//CystomList로 이동
 			Intent intentCustomList = new Intent();
 			intentCustomList.setClass(MainActivity.this, CustomList.class);
     		startActivity(intentCustomList);

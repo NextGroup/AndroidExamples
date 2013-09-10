@@ -16,12 +16,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.nhnnext.android.day3.MainActivity.BasicBroadCastReceiver;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ *  HTTP로 외부의 JSON파일을 읽어와서 파싱을 하는 서비스
+ */
 public class Proxy extends IntentService {
  
     
@@ -108,16 +110,8 @@ public class Proxy extends IntentService {
 			
 		}
 		
-		//Dao dao = new Dao(getBaseContext());
-		//dao.insertData(articleList);
-		
-		Log.i("test", "Sending!");
-		Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(BasicBroadCastReceiver.PROCESS_RESPONSE);
-        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        broadcastIntent.putExtra("Articles", articleList);
-        sendBroadcast(broadcastIntent);
-        
+		Dao dao = new Dao(getBaseContext());
+		dao.insertData(articleList);
 		
 		
 	}

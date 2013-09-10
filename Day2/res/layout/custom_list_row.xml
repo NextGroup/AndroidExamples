@@ -1,3 +1,5 @@
+<!-- 커스텀 어댑터 레이아웃 -->
+<!-- 좌측에 이미지 뷰 한개와 세로로 배치된 TextView를 2개 정의 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

@@ -30,15 +30,26 @@ public class CustomList extends Activity {
 	private ListView listView;
 	ArrayList<Professor> listCustom = new ArrayList<Professor>();
 	
+	/*
+	 * 안드로이드에서 기본 제공해주는 어댑터 외에
+	 * 사진을 집어넣는 다던지 다른 효과들을 집어 넣을려면
+	 * 직접 어댑터를 만들어서 구현을 해야 합니다.
+	 * 이 예제에서는 글 2줄과 이미지를 표시하는 리스트를 구현합니다.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_layout);
 		listView =  (ListView)findViewById(R.id.listView1);
+		
 		setData();
 		viewList();
 	}
 	
+	/*
+	 * step1
+	 * 데이터를 한 종류의 객체로 모아주는 과정
+	 */
 	private void setData() {
 		for (int i = 0; i < names.length; i++) {
 			Professor prof = new Professor(names[i], village[i], imgPath[i]);
@@ -46,6 +57,11 @@ public class CustomList extends Activity {
 		}
 	}
 	
+	/*
+	 * step2
+	 * 직접 만든 커스텀 어댑터를 적용하는 과정
+	 * CustomAdapter의 소스를 봐야합니다.
+	 */
 	private void viewList() {
 		CustomAdapter customAdapter = new CustomAdapter(this, R.layout.custom_list_row, listCustom);
 		listView.setAdapter(customAdapter);

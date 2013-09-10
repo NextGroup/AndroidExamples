@@ -12,6 +12,7 @@
         android:text="왼쪽 위 앱 아이콘을 터치해 주세요"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <!-- 레이아웃 맨 마지막에 사이드 네비게이션을 정의합니다. -->
     <com.devspark.sidenavigation.SideNavigationView
         android:id="@+id/side_navigation_view"
         android:layout_width="match_parent"

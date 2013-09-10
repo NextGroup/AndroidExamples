@@ -11,6 +11,7 @@ public class Professor {
 		this.imgPath = imgPath;
 	}
 	
+	//커스텀 어댑터에서 사용하기 위해 get 메소드들이 필요합니다.
 	public String getName() {
 		return name;
 	}
