@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/main_action_write"
+        android:icon="@android:drawable/ic_menu_send"
+        android:showAsAction="ifRoom|withText"
+        android:title="Write"/>
+    
+    <item
+        android:id="@+id/main_action_refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:showAsAction="ifRoom|withText"
+        android:title="Refresh"/>
+
+</menu>

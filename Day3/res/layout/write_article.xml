@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/write_article_editText_writer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:ems="10"
+        android:hint="작성자명"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#317092"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/write_article_imageButton_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:maxHeight="230dp"
+        android:src="@drawable/add_photo" />
+
+    <EditText
+        android:id="@+id/write_article_editText_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="제목"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/write_article_editText_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:gravity="center_vertical|top"
+        android:hint="본문 내용"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>
