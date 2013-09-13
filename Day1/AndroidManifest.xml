@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.nhnnext.android.day1"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="org.nhnnext.android.day1.Day1MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.LinearLayoutSample"
+            android:label="Linear Layout Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.RelativeLayoutSample"
+            android:label="Relative Layout Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.TextViewSample"
+            android:label="TextView Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.EditTextSample"
+            android:label="EditText Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.ButtonSample"
+            android:label="Button Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.ImageButtonSample"
+            android:label="Image Button Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.ImageViewSample"
+            android:label="Image View Sample" >
+        </activity>
+        <activity
+            android:name="org.nhnnext.android.day1.WebViewSample"
+            android:label="Web View Sample" >
+        </activity>
+    </application>
+
+</manifest>
