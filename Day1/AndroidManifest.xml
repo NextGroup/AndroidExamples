@@ -32,30 +32,7 @@
             android:name="org.nhnnext.android.day1.RelativeLayoutSample"
             android:label="Relative Layout Sample" >
         </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.TextViewSample"
-            android:label="TextView Sample" >
-        </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.EditTextSample"
-            android:label="EditText Sample" >
-        </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.ButtonSample"
-            android:label="Button Sample" >
-        </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.ImageButtonSample"
-            android:label="Image Button Sample" >
-        </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.ImageViewSample"
-            android:label="Image View Sample" >
-        </activity>
-        <activity
-            android:name="org.nhnnext.android.day1.WebViewSample"
-            android:label="Web View Sample" >
-        </activity>
+
     </application>
 
 </manifest>

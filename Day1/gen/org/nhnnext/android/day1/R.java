@@ -24,46 +24,20 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001c;
-        public static final int bu_button1=0x7f080008;
-        public static final int bu_button2=0x7f080009;
-        public static final int bu_button3=0x7f08000a;
-        public static final int bu_button4=0x7f08000b;
-        public static final int button1=0x7f080012;
-        public static final int button2=0x7f080013;
-        public static final int button3=0x7f080016;
-        public static final int button4=0x7f080017;
-        public static final int ets_button_getText=0x7f08000d;
-        public static final int ets_editText_plain=0x7f08000c;
-        public static final int ets_editText_setText=0x7f08000e;
-        public static final int ibs_imageButton1=0x7f08000f;
-        public static final int imageView1=0x7f080014;
-        public static final int imageView2=0x7f080015;
-        public static final int imv_button1=0x7f080011;
-        public static final int imv_imageView1=0x7f080010;
-        public static final int main_button_button=0x7f080004;
-        public static final int main_button_edit_text=0x7f080003;
-        public static final int main_button_imageButton=0x7f080005;
-        public static final int main_button_imageView=0x7f080006;
+        public static final int action_settings=0x7f080008;
+        public static final int button1=0x7f080002;
+        public static final int button2=0x7f080003;
+        public static final int button3=0x7f080006;
+        public static final int button4=0x7f080007;
+        public static final int imageView1=0x7f080004;
+        public static final int imageView2=0x7f080005;
         public static final int main_button_linear=0x7f080000;
         public static final int main_button_relative=0x7f080001;
-        public static final int main_button_textview=0x7f080002;
-        public static final int main_button_webView=0x7f080007;
-        public static final int tv_button_getText=0x7f080019;
-        public static final int tv_button_setText=0x7f08001a;
-        public static final int tv_textView_plain=0x7f080018;
-        public static final int wv_webView1=0x7f08001b;
     }
     public static final class layout {
         public static final int activity_day1_main=0x7f030000;
-        public static final int button_sample=0x7f030001;
-        public static final int edittext_sample=0x7f030002;
-        public static final int image_button_sample=0x7f030003;
-        public static final int image_view_sample=0x7f030004;
-        public static final int linear_layout_sample=0x7f030005;
-        public static final int relative_layout_sample=0x7f030006;
-        public static final int textview_sample=0x7f030007;
-        public static final int web_view_sample=0x7f030008;
+        public static final int linear_layout_sample=0x7f030001;
+        public static final int relative_layout_sample=0x7f030002;
     }
     public static final class menu {
         public static final int day1_main=0x7f070000;
