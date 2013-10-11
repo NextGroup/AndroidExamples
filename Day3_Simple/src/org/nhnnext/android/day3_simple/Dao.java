@@ -1,16 +1,18 @@
-package org.nhnnext.android.day3;
+package org.nhnnext.android.day3_simple;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.nhnnext.android.day3.MainActivity.BroadCastReceiverForList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
  * SQLite의 입출력을 담당하는 클래스
@@ -43,36 +45,66 @@ public class Dao {
 		database.execSQL(sql);
 	}
 	
-	
-	
-	//DB에 입력후 완료 여부를 BroadCast로 알려준다.
-	public void insertData(ArrayList<Article> articles) {
-		for (int i = 0; i < articles.size(); i++) {
-			dbInsert(articles.get(i));
-		}
 
-		Log.i("test", "Send BroadCast For Refresh List");
-		Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(BroadCastReceiverForList.REFRESH_LIST);
-        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        context.sendBroadcast(broadcastIntent);
-        
-	}
-	
-	//DB에 저장하기
-	private void dbInsert(Article article) {
-		ContentValues values = new ContentValues();
-		values.put("ArticleNumber", article.getArticleNumber());
-		values.put("Title", article.getTitle());
-		values.put("Writer", article.getWriter());
-		values.put("Id", article.getId());
-		values.put("Content", article.getContent());
-		values.put("WriteDate", article.getWriteDate());
-		values.put("ImgName", article.getImgName());
-		database.insert(TABLE_NAME, null, values);
+
+	public void insertJsonData(String jsonData) {
+		
+		JSONArray jArr;
+		int articleNumber;
+		String title;
+		String writer;
+		String id;
+		String content;
+		String writeDate;
+		String imgName;
+		
+		try {
+			jArr = new JSONArray(jsonData);
+		
+		Img_Downloader imgDownLoader = new Img_Downloader(context);
+		for (int i = 0; i < jArr.length(); ++i) {
+			JSONObject jObj = jArr.getJSONObject(i);
+			
+			articleNumber = jObj.getInt("ArticleNumber");
+			title = jObj.getString("Title");
+			writer = jObj.getString("Writer");
+			id = jObj.getString("Id");
+			content = jObj.getString("Content");
+			writeDate = jObj.getString("WriteDate");
+			imgName = jObj.getString("ImgName");
+			
+			try {
+				title = URLDecoder.decode(title,"UTF-8");
+				writer = URLDecoder.decode(writer,"UTF-8");
+				id = URLDecoder.decode(id,"UTF-8");
+				content = URLDecoder.decode(content,"UTF-8");
+				writeDate = URLDecoder.decode(writeDate,"UTF-8");
+				imgName = URLDecoder.decode(imgName,"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
+			ContentValues values = new ContentValues();
+			values.put("ArticleNumber", articleNumber);
+			values.put("Title", title);
+			values.put("Writer", writer);
+			values.put("Id", id);
+			values.put("Content", content);
+			values.put("WriteDate", writeDate);
+			values.put("ImgName", imgName);
+			database.insert(TABLE_NAME, null, values);
+			
+			imgDownLoader.copy_img(MainActivity.SERVER_ADDRESS + "image/" + imgName, imgName);
+			
+		}
+		
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
-
+	
 	
 	//DB의 내용을 꺼내서 ArrayList<Article>형태로 반환한다.
 	public ArrayList<Article> getArticleList() {
