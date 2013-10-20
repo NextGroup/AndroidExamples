@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.Activity;
@@ -63,68 +64,51 @@ public class ArticleWriter extends Activity {
 			}
 		});
 		
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.write_action, menu);
-		return true;
-	}
-	
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		switch(item.getItemId()){
-		
-		case R.id.write_action_write:
+		Button buUpload = (Button) findViewById(R.id.write_article_button1);
+		buUpload.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				final Handler handler = new Handler();
+				
+				new Thread() {
+					public void run() {
+						
+						handler.post(new Runnable() {
+							public void run() {
+								progressDialog = ProgressDialog.show(ArticleWriter.this, "","업로드 중입니다.");
+							}
+						});
 
-			final Handler handler = new Handler();
-			
-			new Thread() {
-				public void run() {
-					
-					handler.post(new Runnable() {
-						public void run() {
-							progressDialog = ProgressDialog.show(ArticleWriter.this, "","업로드 중입니다.");
-						}
-					});
-
-					Article article = new Article(0,
-							etTitle.getText().toString(),
-							etWriter.getText().toString(),
-							MainActivity.DEVICE_ID,
-							etContent.getText().toString(),
-							Util.getDate(),
-							fileName);
-					
-		        	ProxyUP proxyUP = new ProxyUP();
-		        	proxyUP.uploadArticle(article, filePath);
-		        	
-					handler.post(new Runnable() {
-						public void run() {
-							progressDialog.cancel();
-							
-							//
-							//
-							//
-							
-				        	finish();
-						}
-					});
-		        	
-        	
-				}
-			}.start();
-			
-        	
-        	
-			break;
-		default:
-			return false;
-		}
-		return true;
+						Article article = new Article(0,
+								etTitle.getText().toString(),
+								etWriter.getText().toString(),
+								MainActivity.DEVICE_ID,
+								etContent.getText().toString(),
+								Util.getDate(),
+								fileName);
+						
+			        	ProxyUP proxyUP = new ProxyUP();
+			        	proxyUP.uploadArticle(article, filePath);
+			        	
+						handler.post(new Runnable() {
+							public void run() {
+								progressDialog.cancel();
+								
+								//
+								//
+								//
+								
+					        	finish();
+							}
+						});
+			        	
+	        	
+					}
+				}.start();
+			}
+		});
 	}
+	
+	
 	
   	@Override
   	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

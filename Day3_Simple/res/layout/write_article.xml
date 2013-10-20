@@ -3,6 +3,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <Button
+        android:id="@+id/write_article_button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write" />
+
     <EditText
         android:id="@+id/write_article_editText_writer"
         android:layout_width="match_parent"

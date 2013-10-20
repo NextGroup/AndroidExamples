@@ -26,7 +26,7 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
+        public static final int action_settings=0x7f080010;
         public static final int custom_row_imageView1=0x7f080003;
         public static final int custom_row_textView1=0x7f080004;
         public static final int custom_row_textView2=0x7f080005;
@@ -38,11 +38,11 @@ public final class R {
         public static final int view_article_textView_title=0x7f080009;
         public static final int view_article_textView_write_time=0x7f080007;
         public static final int view_article_textView_writer=0x7f080006;
-        public static final int write_action_write=0x7f080010;
-        public static final int write_article_editText_content=0x7f08000e;
-        public static final int write_article_editText_title=0x7f08000d;
-        public static final int write_article_editText_writer=0x7f08000b;
-        public static final int write_article_imageButton_photo=0x7f08000c;
+        public static final int write_article_button1=0x7f08000b;
+        public static final int write_article_editText_content=0x7f08000f;
+        public static final int write_article_editText_title=0x7f08000e;
+        public static final int write_article_editText_writer=0x7f08000c;
+        public static final int write_article_imageButton_photo=0x7f08000d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -52,7 +52,6 @@ public final class R {
     }
     public static final class menu {
         public static final int main=0x7f070000;
-        public static final int write_action=0x7f070001;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
