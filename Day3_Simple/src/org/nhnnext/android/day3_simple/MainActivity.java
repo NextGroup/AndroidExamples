@@ -93,11 +93,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		proxy = new Proxy();
 		dao = new Dao(getApplicationContext());
 		
-		refreshData();
-		
 	}
 	
-	
+	@Override
+	public void onResume() {
+		super.onResume();
+		refreshData();
+	}
 	
 	@Override
 	public void onClick(View view) {

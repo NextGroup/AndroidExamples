@@ -108,20 +108,20 @@ public class SherLockSideNavigation extends Activity {
 			// Validation clicking on side navigation item
 			String text = "";
 			switch (itemId) {
-			case R.id.side_navigation_menu_item1:
-				text = "1";
+			case R.id.side_navigation_menu_add:
+				text = "add";
 				break;
-			case R.id.side_navigation_menu_item2:
-				text = "2";
+			case R.id.side_navigation_menu_call:
+				text = "call";
 				break;
-			case R.id.side_navigation_menu_item3:
-				text = "3";
+			case R.id.side_navigation_menu_camera:
+				text = "camera";
 				break;
-			case R.id.side_navigation_menu_item4:
-				text = "4";
+			case R.id.side_navigation_menu_delete:
+				text = "delete";
 				break;
-			case R.id.side_navigation_menu_item5:
-				text = "5";
+			case R.id.side_navigation_menu_text:
+				text = "text";
 				break;
 			default:
 				text = "";

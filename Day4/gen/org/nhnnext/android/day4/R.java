@@ -993,11 +993,11 @@ containing a value of this type.
         public static final int side_navigation_item_text=0x7f050036;
         public static final int side_navigation_listview=0x7f050039;
         public static final int side_navigation_menu=0x7f050038;
-        public static final int side_navigation_menu_item1=0x7f05003f;
-        public static final int side_navigation_menu_item2=0x7f050040;
-        public static final int side_navigation_menu_item3=0x7f050041;
-        public static final int side_navigation_menu_item4=0x7f050042;
-        public static final int side_navigation_menu_item5=0x7f050043;
+        public static final int side_navigation_menu_add=0x7f05003f;
+        public static final int side_navigation_menu_call=0x7f050040;
+        public static final int side_navigation_menu_camera=0x7f050041;
+        public static final int side_navigation_menu_delete=0x7f050042;
+        public static final int side_navigation_menu_text=0x7f050043;
         public static final int side_navigation_outside_view=0x7f050037;
         public static final int side_navigation_view=0x7f050034;
         public static final int tabMode=0x7f050003;
