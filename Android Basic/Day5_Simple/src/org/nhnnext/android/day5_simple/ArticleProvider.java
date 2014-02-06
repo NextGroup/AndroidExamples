@@ -34,36 +34,13 @@ public class ArticleProvider extends ContentProvider{
 	
 	@Override
 	public boolean onCreate() {
-		Log.i("test", "onCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateetete");
-		try {
-			createDatabase();
-			tableCreate();
-			Log.i("test", "Create Databases!!!");
-		} catch (Exception e) {
-			Log.i("test", "Don't Create Databases!!!");
-			e.printStackTrace();
-			return true;
-		}
+		//Database Open
+		database = getContext().openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+		database.setLocale(Locale.getDefault());
+		database.setVersion(1);
 		return true;
 	}
-	//SQLite 초기화
-	private void createDatabase() {
-		try {
-			database = getContext().openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
-			database.setLocale(Locale.getDefault());
-			database.setVersion(1);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-	}
 	
-	//테이블 생성
-	private void tableCreate() {
-		String sql = "create table " + TABLE_NAME + "(_id integer primary key autoincrement, ArticleNumber integer UNIQUE not null, Title text not null, Writer text not null, Id text not null, Content text not null, WriteDate text not null, ImgName text UNIQUE not null);";
-		database.execSQL(sql);
-	}
-
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		// TODO Auto-generated method stub
@@ -78,7 +55,6 @@ public class ArticleProvider extends ContentProvider{
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		/*
 		String tableName;
 		int articleNumber;
 		String title;
@@ -87,11 +63,8 @@ public class ArticleProvider extends ContentProvider{
 		String content;
 		String writeDate;
 		String imgName;
-		*/
 		long row_id;
-		Log.i("test", "[AP]++++++++++++++++++++++++++++Uri : "+uri.toString());
-		Log.i("test", "[AP]++++++++++++++++++++++++++++values : "+values.toString());
-		/*
+		
 		switch (sUriMatcher.match(uri)) {
 		case 0:
 
@@ -106,17 +79,8 @@ public class ArticleProvider extends ContentProvider{
 						
 			break;
 		default:
-			tableName = TABLE_NAME;
-			articleNumber = values.getAsInteger("ArticleNumber");
-			title = values.getAsString("title");
-			writer = values.getAsString("Writer");
-			id = values.getAsString("Id");
-			content = values.getAsString("Content");
-			writeDate = values.getAsString("WriteDate");
-			imgName = values.getAsString("ImgName");
 		}
-		*/
-		//database.insert(TABLE_NAME, null, values);
+		
 		try {
 			row_id = database.insert(TABLE_NAME, null, values);
 			if(row_id > 0){
@@ -126,7 +90,7 @@ public class ArticleProvider extends ContentProvider{
 				return itemUri;
 				
 			}else
-				throw new SQLException();
+				throw new Exception();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,7 +102,7 @@ public class ArticleProvider extends ContentProvider{
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		switch (sUriMatcher.match(uri)) {
-		case 1:
+		case 0:
 			if(TextUtils.isEmpty(sortOrder))
 				sortOrder = "_ID ASC";
 			break;
@@ -156,6 +120,6 @@ public class ArticleProvider extends ContentProvider{
 		// TODO Auto-generated method stub
 		return 0;
 	}	
-	
+
 
 }

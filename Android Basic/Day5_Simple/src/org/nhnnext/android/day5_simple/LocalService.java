@@ -10,8 +10,8 @@ import android.util.Log;
 
 public class LocalService extends Service {
 	private Proxy proxy;
-	private Dao dao;
-
+	private MainController mainController;
+	
 	private TimerTask mTask;
 	private Timer mTimer;
 	
@@ -29,7 +29,7 @@ public class LocalService extends Service {
 		super.onCreate();
 
 		proxy = new Proxy();
-		dao = new Dao(getApplicationContext());
+		mainController = MainController.getInstance();
 		
 		MINUTE = 60*1000;
 		Log.i("Service", "Service onCreate");
@@ -43,8 +43,7 @@ public class LocalService extends Service {
 		mTask = new TimerTask() {
 			public void run() {
 				countForTest++;
-				String jsonData = proxy.getJSON();
-				dao.insertJsonData(jsonData);
+				mainController.insertDataToDatabase();
 				Log.i("Service", "TimerTask Start : " + countForTest);
 			}
 		};

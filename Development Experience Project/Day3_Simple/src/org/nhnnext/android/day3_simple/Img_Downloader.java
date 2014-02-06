@@ -31,7 +31,7 @@ import android.content.Context;
 
 public class Img_Downloader {
 	private final Context context;
-
+	
 	// 임시로 전에 만들었던 클래스 붙여서 테스트중임
 	public Img_Downloader(Context context) {
 		this.context = context;

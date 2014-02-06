@@ -16,16 +16,17 @@ import android.graphics.BitmapFactory;
 
 public class ArticleViewer extends Activity {
 	
+	private Proxy proxy;
 	private Bitmap bitmap;
+	private MainController mainController;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_article);
 		
-		
-		
-		Dao dao = new Dao(getApplicationContext());
-		
+		proxy = new Proxy();
+		mainController = MainController.getInstance();
 		
 		TextView tvTitle = (TextView)findViewById(R.id.view_article_textView_title);
 		TextView tvWriter = (TextView)findViewById(R.id.view_article_textView_writer);
@@ -37,7 +38,7 @@ public class ArticleViewer extends Activity {
 		String articleNumber = getIntent().getExtras().getString("ArticleNumber");
 		
 		
-		Article article = dao.getArticle(Integer.parseInt(articleNumber));
+		Article article = mainController.getArticle(Integer.parseInt(articleNumber));
 		
 		tvTitle.setText(article.getTitle());
 		tvWriter.setText(article.getWriter());

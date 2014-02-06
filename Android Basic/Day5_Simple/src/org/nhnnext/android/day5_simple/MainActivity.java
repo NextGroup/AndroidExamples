@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -17,20 +18,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.support.v7.app.ActionBarActivity;
 
-
-public class MainActivity extends ActionBarActivity{
+public class MainActivity extends ActionBarActivity {
+	public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
 
 	private ListView mainListView1;
 
-	public static String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
 	public static String FILES_DIR;
 	public static String DEVICE_ID;
 	public static int displayW;
 
 	private Proxy proxy;
-	private Dao dao;
+	private MainController mainController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +49,10 @@ public class MainActivity extends ActionBarActivity{
 		mainListView1 = (ListView) findViewById(R.id.main_listView1);
 
 		proxy = new Proxy();
-		dao = new Dao(getApplicationContext());
-		
-		// Service를 실행 시킨다.
-		// Service를 실행 시키는 타이밍은 언제?
-		// Service를 하나만 실행시키도록 어떻게 보장할까.
-		// * flag를 설치한다, 
+		mainController = MainController.getInstance();
+		mainController.setContext(getApplicationContext());
+		mainController.initializeDatabase();
+	
 		Intent intent = new Intent(this, LocalService.class);
 		startService(intent);
 
@@ -109,13 +106,11 @@ public class MainActivity extends ActionBarActivity{
 
 		new Thread() {
 			public void run() {
-				String jsonData = proxy.getJSON();
-				Log.i("test", jsonData);
-				dao.insertJsonData(jsonData);
+				mainController.insertDataToDatabase();
 
 				mHandler.post(new Runnable() {
 					public void run() {
-						listViewSimple1(dao.getArticleList());
+						listViewSimple1(mainController.getArticleList());
 					}
 				});
 
@@ -145,4 +140,5 @@ public class MainActivity extends ActionBarActivity{
 			startActivity(intent);
 		}
 	};
+
 }
