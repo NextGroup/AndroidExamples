@@ -1,13 +1,6 @@
 package org.nhnnext.android.day5_simple;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Locale;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -30,7 +23,6 @@ public class ArticleProvider extends ContentProvider{
     private static final String TABLE_NAME = "Articles";
 	
     private SQLiteDatabase database;
-	private Context context;
 	
 	private static UriMatcher sUriMatcher;
 	
@@ -42,6 +34,7 @@ public class ArticleProvider extends ContentProvider{
 	
 	@Override
 	public boolean onCreate() {
+		Log.i("test", "onCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateeteteonCreateetete");
 		try {
 			createDatabase();
 			tableCreate();
@@ -49,20 +42,20 @@ public class ArticleProvider extends ContentProvider{
 		} catch (Exception e) {
 			Log.i("test", "Don't Create Databases!!!");
 			e.printStackTrace();
-			return false;
+			return true;
 		}
 		return true;
 	}
 	//SQLite 초기화
-	private boolean createDatabase() {
+	private void createDatabase() {
 		try {
-			database = context.openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+			database = getContext().openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
 			database.setLocale(Locale.getDefault());
 			database.setVersion(1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			// TODO: handle exception
 		}
-		return database != null? true: false;
+		
 	}
 	
 	//테이블 생성

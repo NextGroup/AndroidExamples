@@ -43,7 +43,7 @@ public class ProxyUP {
 			FileInputStream fis = new FileInputStream(filePath);
 			
 			URL url = new URL(
-					"http://scope.hosting.bizfree.kr/next/android/jsonSqlite/upload.php");
+					MainActivity.SERVER_ADDRESS + "upload.php");
 			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");

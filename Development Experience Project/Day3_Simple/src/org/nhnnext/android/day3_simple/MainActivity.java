@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private ListView mainListView1;
 	
-	public static String SERVER_ADDRESS = "http://scope.hosting.bizfree.kr/next/android/jsonSqlite/";
+	public static String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
 	public static String FILES_DIR;
 	public static String DEVICE_ID;
 	public static int displayW;
