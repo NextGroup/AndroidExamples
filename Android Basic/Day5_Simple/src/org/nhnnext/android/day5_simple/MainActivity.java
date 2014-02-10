@@ -20,15 +20,20 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
-	public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
-
+	// 서버주소를 관리
+	//public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
+	public static final String SERVER_ADDRESS = "http://scope.hosting.bizfree.kr/next/android/jsonSqlite/";
+	// ListView를 담기위한 변수
 	private ListView mainListView1;
 
+	// 파일주소를 얻기 위한 변수
 	public static String FILES_DIR;
+	// 사용자별 고유한 식별값을 얻기 위한 변수
 	public static String DEVICE_ID;
+	// display의 Width를 저장하기 위한 변수 [ 의미 없어 보임 ]
 	public static int displayW;
 
-	private Proxy proxy;
+	//mainController를 담기위한 변수
 	private MainController mainController;
 
 	@Override
@@ -47,12 +52,18 @@ public class MainActivity extends ActionBarActivity {
 		displayW = display.getWidth();
 
 		mainListView1 = (ListView) findViewById(R.id.main_listView1);
-
-		proxy = new Proxy();
+		
+		/*
+		 *  mainController의 인스턴스를 가져오고 Context를 현재의 Context로 설정 후 
+		 *  mainController의 메서드를 이용해 Database초기화 
+		 */
 		mainController = MainController.getInstance();
 		mainController.setContext(getApplicationContext());
 		mainController.initializeDatabase();
-	
+		
+		/*
+		 * 서비스를 실행하는 코드 startService(Intent)를 이용해 시작한다.
+		 */
 		Intent intent = new Intent(this, LocalService.class);
 		startService(intent);
 
@@ -60,6 +71,7 @@ public class MainActivity extends ActionBarActivity {
 
 	/*
 	 * ActionBar Compat을 사용하기 위해 onCreateOptionsMenu를 구현한다.
+	 * R.menu.main은 직접 구현한 xml 
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
 
 	/*
 	 * onOptionsItemSelected를 사용해 Actionbar에 있는 아이템의 이벤트를 받을 수 있다.
+	 * MenuItem item.getItemId()를 통해 어떠한 버튼이 눌렸는지 확인할 수 있음
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -80,6 +93,7 @@ public class MainActivity extends ActionBarActivity {
 			refreshData();
 			break;
 		case R.id.action_item_write:
+			//Write item을 클릭할 경우 ArticleWriter로 넘어간다.
 			text = "write";
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, ArticleWriter.class);
@@ -93,21 +107,27 @@ public class MainActivity extends ActionBarActivity {
 
 		return true;
 	}
-
+	
+	/*
+	 * refreshData를 onResume()에 할당하여 다른 액티비티를 호출한 후 다시 복귀할 때 매번 실행시킬 수 있도록한다. 
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
 		refreshData();
 	}
 
+	
+	/*
+	 * refreshData는 mainController의 insertDataToDatabase를 통해 Database로 정보를 넣은 후에  
+	 * Handler에게 UI정보를 갱신하도록 합니다.
+	 */
 	private final Handler mHandler = new Handler();
-
 	private void refreshData() {
 
 		new Thread() {
 			public void run() {
 				mainController.insertDataToDatabase();
-
 				mHandler.post(new Runnable() {
 					public void run() {
 						listViewSimple1(mainController.getArticleList());
@@ -128,7 +148,10 @@ public class MainActivity extends ActionBarActivity {
 		mainListView1.setOnItemClickListener(itemClickListener);
 
 	}
-
+	
+	/*
+	 * ListView의 아이템이 클릭되었을때 ArticleViewer로 이동합니다.
+	 */
 	private OnItemClickListener itemClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> adapterView, View view,
 				int position, long id) {
@@ -140,5 +163,4 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(intent);
 		}
 	};
-
 }

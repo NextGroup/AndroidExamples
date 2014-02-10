@@ -17,30 +17,32 @@ import android.util.Log;
 /**
  * SQLite의 입출력을 담당하는 클래스
  */
-public class ArticleProvider extends ContentProvider{
+public class ArticleProvider extends ContentProvider {
 	public static final String AUTHORITY = "org.nhnnext.android.day5_simple.Article";
-    public static final Uri CONTENT_URI = Uri.parse("content://"+ AUTHORITY + "/Articles");
-    private static final String TABLE_NAME = "Articles";
-	
-    private SQLiteDatabase database;
-	
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+			+ "/Articles");
+	private static final String TABLE_NAME = "Articles";
+
+	private SQLiteDatabase database;
+
 	private static UriMatcher sUriMatcher;
-	
+
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, TABLE_NAME, 0);
-		sUriMatcher.addURI(AUTHORITY, TABLE_NAME+"/#", 1);
+		sUriMatcher.addURI(AUTHORITY, TABLE_NAME + "/#", 1);
 	}
-	
+
 	@Override
 	public boolean onCreate() {
-		//Database Open
-		database = getContext().openOrCreateDatabase("sqliteTest.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+		// Database Open
+		database = getContext().openOrCreateDatabase("sqliteTest.db",
+				SQLiteDatabase.CREATE_IF_NECESSARY, null);
 		database.setLocale(Locale.getDefault());
 		database.setVersion(1);
 		return true;
 	}
-	
+
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		// TODO Auto-generated method stub
@@ -64,7 +66,7 @@ public class ArticleProvider extends ContentProvider{
 		String writeDate;
 		String imgName;
 		long row_id;
-		
+
 		switch (sUriMatcher.match(uri)) {
 		case 0:
 
@@ -76,26 +78,26 @@ public class ArticleProvider extends ContentProvider{
 			content = values.getAsString("Content");
 			writeDate = values.getAsString("WriteDate");
 			imgName = values.getAsString("ImgName");
-						
+
 			break;
 		default:
 		}
-		
+
 		try {
 			row_id = database.insert(TABLE_NAME, null, values);
-			if(row_id > 0){
+			if (row_id > 0) {
 
 				Uri itemUri = ContentUris.withAppendedId(CONTENT_URI, row_id);
 				getContext().getContentResolver().notifyChange(itemUri, null);
 				return itemUri;
-				
-			}else
+
+			} else
 				throw new Exception();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return uri;
-		
+
 	}
 
 	@Override
@@ -103,7 +105,7 @@ public class ArticleProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		switch (sUriMatcher.match(uri)) {
 		case 0:
-			if(TextUtils.isEmpty(sortOrder))
+			if (TextUtils.isEmpty(sortOrder))
 				sortOrder = "_ID ASC";
 			break;
 
@@ -119,7 +121,6 @@ public class ArticleProvider extends ContentProvider{
 			String[] selectionArgs) {
 		// TODO Auto-generated method stub
 		return 0;
-	}	
-
+	}
 
 }

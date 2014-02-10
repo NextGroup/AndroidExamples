@@ -50,9 +50,9 @@ public class LocalService extends Service {
 		
 		mTimer = new Timer();
 		// MainActivity onResume에서 refreshData 에서 한번 실행하기 때문에 5분 Delay 후에 5분 주기로 실행 
-		mTimer.schedule(mTask, 5*MINUTE, 5*MINUTE);
+		//mTimer.schedule(mTask, 1*MINUTE, 1*MINUTE);
 		// Just for TEST
-		//mTimer.schedule(mTask, 5000, 5000);
+		mTimer.schedule(mTask, 10000, 10000);
 		return super.onStartCommand(intent, flags, startId);
 	}
 

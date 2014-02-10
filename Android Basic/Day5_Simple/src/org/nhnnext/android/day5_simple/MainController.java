@@ -10,18 +10,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 public class MainController {
+	// Singleton pattern을 위한 MainController 변수
 	private final static MainController instance = new MainController();
+	// Database를 관리하기 위한 변수
 	private SQLiteDatabase database;
 
+	// ArticleProvider와 중복되지만.. 어디에 두어야할지 모르겠는 변수들
 	public static final String AUTHORITY = "org.nhnnext.android.day5_simple.Article";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/Articles");
 	private static final String TABLE_NAME = "Articles";
+	// Context관리를 위한 변수
 	private Context context;
+	// Proxy 변수
 	private Proxy proxy;
 
 	private MainController() {
-		
+
 		this.proxy = new Proxy();
 	}
 
@@ -40,10 +45,11 @@ public class MainController {
 		return true;
 	}
 
+	// proxy로부터 Article들을 ArrayList<ContentValue> 가져온 후 DataBase에 insert함 
 	public void insertDataToDatabase() {
 		String imgName;
 		ArrayList<ContentValues> contentValuesArr;
-		
+
 		try {
 			contentValuesArr = proxy.getArticlesAsContentValues();
 			Img_Downloader imgDownLoader = new Img_Downloader(context);
@@ -60,6 +66,7 @@ public class MainController {
 
 	}
 
+	// DataBase안에 있는 Article들을 ArrayList로 반환
 	public ArrayList<Article> getArticleList() {
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
@@ -72,7 +79,6 @@ public class MainController {
 		String imgName;
 
 		if (isTableExist()) {
-			// ContentResolver 의 query를 활용해야함
 			Cursor cursor = database.query(TABLE_NAME, null, null, null, null,
 					null, "_id");
 			if (cursor != null) {
@@ -98,7 +104,7 @@ public class MainController {
 		return articleList;
 	}
 
-	// ContentProvider의 query로 대채할것
+	// Database안에있는 Article 한개를 articleNumber를 기반으로하여 반
 	public Article getArticle(int articleNumber) {
 
 		Article article = null;
@@ -187,11 +193,14 @@ public class MainController {
 	private void createTable() {
 		String sql = "create table "
 				+ TABLE_NAME
-				+ "(_id integer primary key autoincrement, ArticleNumber integer UNIQUE not null, Title text not null, Writer text not null, Id text not null, Content text not null, WriteDate text not null, ImgName text UNIQUE not null);";
+				+ "(_id integer primary key autoincrement, " +
+				"ArticleNumber integer UNIQUE not null, " +
+				"Title text not null, " +
+				"Writer text not null, " +
+				"Id text not null, " +
+				"Content text not null, " +
+				"WriteDate text not null, " +
+				"ImgName text UNIQUE not null);";
 		database.execSQL(sql);
-	}
-
-	public SQLiteDatabase getDatabase() {
-		return this.database;
 	}
 }
