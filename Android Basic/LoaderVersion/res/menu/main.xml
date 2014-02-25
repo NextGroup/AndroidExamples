@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:myapp="http://schemas.android.com/apk/res-auto" >
+	<!-- ActionBar를 만들기 위한 item tags-->
+    <item
+        android:id="@+id/action_item_refresh"
+        android:icon="@android:drawable/ic_menu_upload"
+        myapp:showAsAction="ifRoom"
+        android:title="refresh"/>
+    
+    <item 
+        android:id="@+id/action_item_write"
+        android:icon="@android:drawable/ic_menu_send"
+        myapp:showAsAction="ifRoom"
+        android:title="write"/>
+
+</menu>
