@@ -59,7 +59,7 @@ public class CustomAdapter extends ArrayAdapter<ArticleDTO> {
 		tvName.setText(articleData.get(position).getWriter());
 		tvVillage.setText(articleData.get(position).getTitle());
 		
-    	String img_path = HomeViewer.FILES_DIR + articleData.get(position).getImgName();
+    	String img_path = NextgramController.FILES_DIR + articleData.get(position).getImgName();
         File img_load_path = new File(img_path);
         
         if (img_load_path.exists()) {
@@ -69,7 +69,7 @@ public class CustomAdapter extends ArrayAdapter<ArticleDTO> {
   			
         	Bitmap bitmap = BitmapFactory.decodeFile(img_path, options);
         	Util util = new Util();
- 			imageView.setImageBitmap(util.resizeBitmapImage(bitmap,HomeViewer.displayW/4));
+ 			imageView.setImageBitmap(util.resizeBitmapImage(bitmap,NextgramController.displayW/4));
 			bitmap.recycle();
 			bitmap = null;
 			

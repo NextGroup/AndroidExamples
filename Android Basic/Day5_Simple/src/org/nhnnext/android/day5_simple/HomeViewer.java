@@ -27,11 +27,11 @@ public class HomeViewer extends ActionBarActivity {
 	private ListView mainListView1;
 
 	// 파일주소를 얻기 위한 변수
-	public static String FILES_DIR;
+	//public static String FILES_DIR;
 	// 사용자별 고유한 식별값을 얻기 위한 변수
-	public static String DEVICE_ID;
+	//public static String DEVICE_ID;
 	// display의 Width를 저장하기 위한 변수 [ 의미 없어 보임 ]
-	public static int displayW;
+	//public static int displayW;
 
 	//mainController를 담기위한 변수
 	private NextgramController mainController;
@@ -40,16 +40,6 @@ public class HomeViewer extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		FILES_DIR = getApplicationContext().getFilesDir().getPath() + "/";
-
-		String androidID = Secure.getString(getApplicationContext()
-				.getContentResolver(), Settings.Secure.ANDROID_ID);
-		DEVICE_ID = Util.getMD5Hash(androidID);
-
-		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))
-				.getDefaultDisplay();
-		displayW = display.getWidth();
 
 		mainListView1 = (ListView) findViewById(R.id.main_listView1);
 		

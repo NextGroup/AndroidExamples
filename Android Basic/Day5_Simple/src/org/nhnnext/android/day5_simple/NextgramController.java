@@ -10,6 +10,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class NextgramController {
 	// Singleton pattern을 위한 MainController 변수
@@ -28,10 +32,17 @@ public class NextgramController {
 	private Proxy proxy;
 	// ArticleWritingProxy 변수
 	private ArticleWritingProxy articleWritingProxy;
-	private String filePath = "";
-	
-	private NextgramController() {
 
+	// public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
+	public static final String SERVER_ADDRESS = "http://scope.hosting.bizfree.kr/next/android/jsonSqlite/";
+	// 파일주소를 얻기 위한 변수
+	public static String FILES_DIR;
+	// 사용자별 고유한 식별값을 얻기 위한 변수
+	public static String DEVICE_ID;
+	//display의 Width를 저장하기 위한 변수
+	public static int displayW;
+
+	private NextgramController() {
 		this.proxy = new Proxy();
 		this.articleWritingProxy = new ArticleWritingProxy();
 	}
@@ -39,10 +50,17 @@ public class NextgramController {
 	public static NextgramController getInstance() {
 		return instance;
 	}
-
+	//setContext를 initialize로 바꿔야겠음..
 	public boolean setContext(Context context) {
 		try {
 			this.context = context;
+			FILES_DIR = context.getApplicationContext().getFilesDir().getPath() + "/";
+			String androidID = Secure.getString(context.getApplicationContext()
+					.getContentResolver(), Settings.Secure.ANDROID_ID);
+			DEVICE_ID = Util.getMD5Hash(androidID);
+			Display display = ((WindowManager) context.getSystemService(context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			displayW = display.getWidth();
 		} catch (Exception e) {
 			this.context = null;
 			return false;
@@ -53,8 +71,8 @@ public class NextgramController {
 
 	// PostArticleViewer로 부터 ArticleDTO를 받은후 ArticleWritingProxy에게 전달
 	public void postArticleToServer(ArticleDTO article) {
-		filePath = HomeViewer.FILES_DIR + ".temp.jpg";
-		
+		String filePath = FILES_DIR + ".temp.jpg";
+
 		articleWritingProxy.uploadArticle(article, filePath);
 
 	}

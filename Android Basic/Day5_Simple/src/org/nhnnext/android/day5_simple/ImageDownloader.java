@@ -41,7 +41,7 @@ public class ImageDownloader {
 
 		File img_cache_path;
 
-		img_cache_path = new File(HomeViewer.FILES_DIR + save_name);
+		img_cache_path = new File(NextgramController.FILES_DIR + save_name);
 		if (!img_cache_path.exists()) {
 
 			// ************************************

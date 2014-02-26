@@ -88,7 +88,7 @@ public class PostArticleViewer extends Activity implements OnClickListener {
 
 					ArticleDTO article = new ArticleDTO(0, etTitle.getText()
 							.toString(), etWriter.getText().toString(),
-							HomeViewer.DEVICE_ID, etContent.getText()
+							NextgramController.DEVICE_ID, etContent.getText()
 									.toString(), Util.getDate(), fileName);
 
 					nextgramController.postArticleToServer(article);
@@ -135,9 +135,9 @@ public class PostArticleViewer extends Activity implements OnClickListener {
 				bitmap = BitmapFactory.decodeFile(uri.toString(), options);
 
 				Util util = new Util();
-				bitmap = util.resizeBitmapImage(bitmap, HomeViewer.displayW);
+				bitmap = util.resizeBitmapImage(bitmap, NextgramController.displayW);
 
-				File file = new File(HomeViewer.FILES_DIR + ".temp.jpg");
+				File file = new File(NextgramController.FILES_DIR + ".temp.jpg");
 
 				if (file.exists()) {
 					file.delete();
@@ -146,7 +146,7 @@ public class PostArticleViewer extends Activity implements OnClickListener {
 				FileOutputStream fos = new FileOutputStream(file);
 
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos);
-				filePath = HomeViewer.FILES_DIR + ".temp.jpg";
+				filePath = NextgramController.FILES_DIR + ".temp.jpg";
 				Log.i("test", "save Comp");
 			} catch (Exception e) {
 				Log.e("test", "OutOfMemoryError:" + e);

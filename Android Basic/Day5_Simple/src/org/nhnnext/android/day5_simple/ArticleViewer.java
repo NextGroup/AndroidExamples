@@ -16,7 +16,6 @@ import android.graphics.BitmapFactory;
 
 public class ArticleViewer extends Activity {
 	
-	private Proxy proxy;
 	private Bitmap bitmap;
 	private NextgramController mainController;
 	
@@ -25,7 +24,6 @@ public class ArticleViewer extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_article);
 		
-		proxy = new Proxy();
 		mainController = NextgramController.getInstance();
 		
 		TextView tvTitle = (TextView)findViewById(R.id.view_article_textView_title);
@@ -45,7 +43,7 @@ public class ArticleViewer extends Activity {
 		tvContent.setText(article.getContent());
 		tvWriteDate.setText(article.getWriteDate());
 		
-		String img_path = HomeViewer.FILES_DIR + article.getImgName();
+		String img_path = NextgramController.FILES_DIR + article.getImgName();
         File img_load_path = new File(img_path);
         
         if (img_load_path.exists()) {
@@ -59,7 +57,7 @@ public class ArticleViewer extends Activity {
   			
         	bitmap = BitmapFactory.decodeFile(img_path, options);
 			Util util = new Util();
-			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap,HomeViewer.displayW));
+			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap,NextgramController.displayW));
 			
 		}
         

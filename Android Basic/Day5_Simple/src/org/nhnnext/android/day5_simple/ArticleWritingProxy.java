@@ -33,7 +33,7 @@ public class ArticleWritingProxy {
 		String message = "";
 		
 		
-		String deviceID = HomeViewer.DEVICE_ID;
+		String deviceID = NextgramController.DEVICE_ID;
 		long uploadTime = Util.getMilliTime();
 		
 		String fileName = deviceID + uploadTime + "_" + article.getImgName();
@@ -43,7 +43,7 @@ public class ArticleWritingProxy {
 			FileInputStream fis = new FileInputStream(filePath);
 			
 			URL url = new URL(
-					HomeViewer.SERVER_ADDRESS + "upload.php");
+					NextgramController.SERVER_ADDRESS + "upload.php");
 			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
