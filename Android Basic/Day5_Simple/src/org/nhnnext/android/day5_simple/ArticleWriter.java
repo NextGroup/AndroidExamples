@@ -86,7 +86,7 @@ public class ArticleWriter extends Activity {
 								Util.getDate(),
 								fileName);
 						
-			        	ProxyUP proxyUP = new ProxyUP();
+			        	ArticleWritingProxy proxyUP = new ArticleWritingProxy();
 			        	proxyUP.uploadArticle(article, filePath);
 			        	
 						handler.post(new Runnable() {

@@ -15,7 +15,7 @@ import android.util.Log;
 /**
  * HttpURLConnection을 이용해 POST방식으로 게시글을 업로드 하는 클래스
  */
-public class ProxyUP {
+public class ArticleWritingProxy {
 
 	public void uploadArticle(final ArticleDTO article, final String filePath) {
 		
