@@ -15,10 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<Article> {
+public class CustomAdapter extends ArrayAdapter<ArticleDTO> {
 	private Context context;
 	private int layoutResourceId;
-	private ArrayList<Article> articleData;
+	private ArrayList<ArticleDTO> articleData;
 
 	/*
 	 * step3
@@ -27,7 +27,7 @@ public class CustomAdapter extends ArrayAdapter<Article> {
 	 * res/layout.custom_list_row (R.layout.custom_list_row)을 사용합니다.
 	 * 커스텀 어댑터는 이렇게 자신이 직접 레이아웃을 만들 수 있습니다.
 	 */
-	public CustomAdapter(Context context, int layoutResourceId, ArrayList<Article> articleData) {
+	public CustomAdapter(Context context, int layoutResourceId, ArrayList<ArticleDTO> articleData) {
 		super(context, layoutResourceId, articleData);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;

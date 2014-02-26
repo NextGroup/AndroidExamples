@@ -141,7 +141,7 @@ public class HomeViewer extends ActionBarActivity {
 	/*
 	 * 이 예제에서는 Day2에서 사용하였던 Custom List를 사용합니다.
 	 */
-	private void listViewSimple1(ArrayList<Article> articles) {
+	private void listViewSimple1(ArrayList<ArticleDTO> articles) {
 		CustomAdapter customAdapter = new CustomAdapter(this,
 				R.layout.custom_list_row, articles);
 		mainListView1.setAdapter(customAdapter);

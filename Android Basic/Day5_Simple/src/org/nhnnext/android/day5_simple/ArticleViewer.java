@@ -38,7 +38,7 @@ public class ArticleViewer extends Activity {
 		String articleNumber = getIntent().getExtras().getString("ArticleNumber");
 		
 		
-		Article article = mainController.getArticle(Integer.parseInt(articleNumber));
+		ArticleDTO article = mainController.getArticle(Integer.parseInt(articleNumber));
 		
 		tvTitle.setText(article.getTitle());
 		tvWriter.setText(article.getWriter());

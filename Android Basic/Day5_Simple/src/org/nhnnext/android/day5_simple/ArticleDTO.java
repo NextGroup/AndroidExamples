@@ -1,7 +1,7 @@
 package org.nhnnext.android.day5_simple;
 
 
-public class Article {
+public class ArticleDTO {
 	private int articleNumber;
 	private String title;
 	private String writer;
@@ -10,7 +10,7 @@ public class Article {
 	private String writeDate;
 	private String imgName;
 	
-	Article(int articleNumber, String title, String writer, String id, String content, String writeDate, String imgName) {
+	ArticleDTO(int articleNumber, String title, String writer, String id, String content, String writeDate, String imgName) {
 		this.articleNumber = articleNumber;
 		this.title = title;
 		this.writer = writer;

@@ -17,14 +17,14 @@ import android.util.Log;
  */
 public class ProxyUP {
 
-	public void uploadArticle(final Article article, final String filePath) {
+	public void uploadArticle(final ArticleDTO article, final String filePath) {
 		
 		String uploadMessage = postToServer(article, filePath);
 		Log.i("test", "uploadMessage:" + uploadMessage);
 	
 	}
 
-	private String postToServer(Article article, String filePath) {
+	private String postToServer(ArticleDTO article, String filePath) {
 		
 		String lineEnd = "\r\n";
 		String twoHyphens = "--";

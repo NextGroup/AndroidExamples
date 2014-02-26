@@ -78,7 +78,7 @@ public class ArticleWriter extends Activity {
 							}
 						});
 
-						Article article = new Article(0,
+						ArticleDTO article = new ArticleDTO(0,
 								etTitle.getText().toString(),
 								etWriter.getText().toString(),
 								HomeViewer.DEVICE_ID,

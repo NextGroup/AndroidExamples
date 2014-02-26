@@ -67,8 +67,8 @@ public class NextgramController {
 	}
 
 	// DataBase안에 있는 Article들을 ArrayList로 반환
-	public ArrayList<Article> getArticleList() {
-		ArrayList<Article> articleList = new ArrayList<Article>();
+	public ArrayList<ArticleDTO> getArticleList() {
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
 
 		int articleNumber;
 		String title;
@@ -92,7 +92,7 @@ public class NextgramController {
 					writeDate = cursor.getString(6);
 					imgName = cursor.getString(7);
 
-					articleList.add(new Article(articleNumber, title, writer,
+					articleList.add(new ArticleDTO(articleNumber, title, writer,
 							id, content, writeDate, imgName));
 					cursor.moveToNext();
 				}
@@ -105,9 +105,9 @@ public class NextgramController {
 	}
 
 	// Database안에있는 Article 한개를 articleNumber를 기반으로하여 반
-	public Article getArticle(int articleNumber) {
+	public ArticleDTO getArticle(int articleNumber) {
 
-		Article article = null;
+		ArticleDTO article = null;
 
 		String title;
 		String writer;
@@ -130,7 +130,7 @@ public class NextgramController {
 				writeDate = cursor.getString(6);
 				imgName = cursor.getString(7);
 
-				article = new Article(articleNumber, title, writer, id,
+				article = new ArticleDTO(articleNumber, title, writer, id,
 						content, writeDate, imgName);
 			}
 
