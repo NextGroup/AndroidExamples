@@ -96,7 +96,7 @@ public class HomeViewer extends ActionBarActivity {
 			//Write item을 클릭할 경우 ArticleWriter로 넘어간다.
 			text = "write";
 			Intent intent = new Intent();
-			intent.setClass(HomeViewer.this, ArticleWriter.class);
+			intent.setClass(HomeViewer.this, PostArticleViewer.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			break;

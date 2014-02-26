@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.nhnnext.android.day5_simple.ArticleWriter"
+            android:name="org.nhnnext.android.day5_simple.PostArticleViewer"
             android:label="Article Writer" >
         </activity>
         <activity

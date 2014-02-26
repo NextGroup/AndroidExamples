@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class ArticleWriter extends Activity {
+public class PostArticleViewer extends Activity {
 
 	private static final int REQUEST_PHOTO_ALBUM = 1;
 	
@@ -74,7 +74,7 @@ public class ArticleWriter extends Activity {
 						
 						handler.post(new Runnable() {
 							public void run() {
-								progressDialog = ProgressDialog.show(ArticleWriter.this, "","업로드 중입니다.");
+								progressDialog = ProgressDialog.show(PostArticleViewer.this, "","업로드 중입니다.");
 							}
 						});
 
