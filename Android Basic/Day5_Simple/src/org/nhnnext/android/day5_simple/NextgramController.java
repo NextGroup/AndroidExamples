@@ -52,7 +52,7 @@ public class NextgramController {
 
 		try {
 			contentValuesArr = proxy.getArticlesAsContentValues();
-			Img_Downloader imgDownLoader = new Img_Downloader(context);
+			ImageDownloader imgDownLoader = new ImageDownloader(context);
 			for (ContentValues contentValues : contentValuesArr) {
 				imgName = contentValues.getAsString("ImgName");
 				imgDownLoader.copy_img(HomeViewer.SERVER_ADDRESS + "image/"
