@@ -3,11 +3,13 @@ package org.nhnnext.android.day5_simple;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Handler;
 
 public class NextgramController {
 	// Singleton pattern을 위한 MainController 변수
@@ -24,10 +26,14 @@ public class NextgramController {
 	private Context context;
 	// Proxy 변수
 	private Proxy proxy;
-
+	// ArticleWritingProxy 변수
+	private ArticleWritingProxy articleWritingProxy;
+	private String filePath = "";
+	
 	private NextgramController() {
 
 		this.proxy = new Proxy();
+		this.articleWritingProxy = new ArticleWritingProxy();
 	}
 
 	public static NextgramController getInstance() {
@@ -45,7 +51,15 @@ public class NextgramController {
 		return true;
 	}
 
-	// proxy로부터 Article들을 ArrayList<ContentValue> 가져온 후 DataBase에 insert함 
+	// PostArticleViewer로 부터 ArticleDTO를 받은후 ArticleWritingProxy에게 전달
+	public void postArticleToServer(ArticleDTO article) {
+		filePath = HomeViewer.FILES_DIR + ".temp.jpg";
+		
+		articleWritingProxy.uploadArticle(article, filePath);
+
+	}
+
+	// proxy로부터 Article들을 ArrayList<ContentValue> 가져온 후 DataBase에 insert함
 	public void insertDataToDatabase() {
 		String imgName;
 		ArrayList<ContentValues> contentValuesArr;
@@ -92,8 +106,8 @@ public class NextgramController {
 					writeDate = cursor.getString(6);
 					imgName = cursor.getString(7);
 
-					articleList.add(new ArticleDTO(articleNumber, title, writer,
-							id, content, writeDate, imgName));
+					articleList.add(new ArticleDTO(articleNumber, title,
+							writer, id, content, writeDate, imgName));
 					cursor.moveToNext();
 				}
 			}
@@ -191,16 +205,13 @@ public class NextgramController {
 	}
 
 	private void createTable() {
-		String sql = "create table "
-				+ TABLE_NAME
-				+ "(_id integer primary key autoincrement, " +
-				"ArticleNumber integer UNIQUE not null, " +
-				"Title text not null, " +
-				"Writer text not null, " +
-				"Id text not null, " +
-				"Content text not null, " +
-				"WriteDate text not null, " +
-				"ImgName text UNIQUE not null);";
+		String sql = "create table " + TABLE_NAME
+				+ "(_id integer primary key autoincrement, "
+				+ "ArticleNumber integer UNIQUE not null, "
+				+ "Title text not null, " + "Writer text not null, "
+				+ "Id text not null, " + "Content text not null, "
+				+ "WriteDate text not null, "
+				+ "ImgName text UNIQUE not null);";
 		database.execSQL(sql);
 	}
 }
