@@ -82,7 +82,7 @@ public class Util {
 		optionsCheck.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(bitmapPath, optionsCheck);
 
-		return optionsCheck.outWidth / MainActivity.displayW;
+		return optionsCheck.outWidth / HomeViewer.displayW;
 	}
 
 }

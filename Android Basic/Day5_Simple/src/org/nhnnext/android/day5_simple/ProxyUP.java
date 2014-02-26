@@ -33,7 +33,7 @@ public class ProxyUP {
 		String message = "";
 		
 		
-		String deviceID = MainActivity.DEVICE_ID;
+		String deviceID = HomeViewer.DEVICE_ID;
 		long uploadTime = Util.getMilliTime();
 		
 		String fileName = deviceID + uploadTime + "_" + article.getImgName();
@@ -43,7 +43,7 @@ public class ProxyUP {
 			FileInputStream fis = new FileInputStream(filePath);
 			
 			URL url = new URL(
-					MainActivity.SERVER_ADDRESS + "upload.php");
+					HomeViewer.SERVER_ADDRESS + "upload.php");
 			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
@@ -60,7 +60,7 @@ public class ProxyUP {
 
 			// write data
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-			
+				
 			
 		    dos.writeBytes(getPostData("title",article.getTitle()));
 		    dos.writeBytes(getPostData("writer",article.getWriter()));

@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class LocalService extends Service {
 	private Proxy proxy;
-	private MainController mainController;
+	private NextgramController mainController;
 	
 	private TimerTask mTask;
 	private Timer mTimer;
@@ -29,7 +29,7 @@ public class LocalService extends Service {
 		super.onCreate();
 
 		proxy = new Proxy();
-		mainController = MainController.getInstance();
+		mainController = NextgramController.getInstance();
 		
 		MINUTE = 60*1000;
 		Log.i("Service", "Service onCreate");

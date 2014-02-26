@@ -18,7 +18,7 @@ public class ArticleViewer extends Activity {
 	
 	private Proxy proxy;
 	private Bitmap bitmap;
-	private MainController mainController;
+	private NextgramController mainController;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ArticleViewer extends Activity {
 		setContentView(R.layout.view_article);
 		
 		proxy = new Proxy();
-		mainController = MainController.getInstance();
+		mainController = NextgramController.getInstance();
 		
 		TextView tvTitle = (TextView)findViewById(R.id.view_article_textView_title);
 		TextView tvWriter = (TextView)findViewById(R.id.view_article_textView_writer);
@@ -45,7 +45,7 @@ public class ArticleViewer extends Activity {
 		tvContent.setText(article.getContent());
 		tvWriteDate.setText(article.getWriteDate());
 		
-		String img_path = MainActivity.FILES_DIR + article.getImgName();
+		String img_path = HomeViewer.FILES_DIR + article.getImgName();
         File img_load_path = new File(img_path);
         
         if (img_load_path.exists()) {
@@ -59,7 +59,7 @@ public class ArticleViewer extends Activity {
   			
         	bitmap = BitmapFactory.decodeFile(img_path, options);
 			Util util = new Util();
-			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap,MainActivity.displayW));
+			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap,HomeViewer.displayW));
 			
 		}
         

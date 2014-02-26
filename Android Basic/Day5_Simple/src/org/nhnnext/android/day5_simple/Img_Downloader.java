@@ -41,7 +41,7 @@ public class Img_Downloader {
 
 		File img_cache_path;
 
-		img_cache_path = new File(MainActivity.FILES_DIR + save_name);
+		img_cache_path = new File(HomeViewer.FILES_DIR + save_name);
 		if (!img_cache_path.exists()) {
 
 			// ************************************

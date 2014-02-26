@@ -9,9 +9,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class MainController {
+public class NextgramController {
 	// Singleton pattern을 위한 MainController 변수
-	private final static MainController instance = new MainController();
+	private final static NextgramController instance = new NextgramController();
 	// Database를 관리하기 위한 변수
 	private SQLiteDatabase database;
 
@@ -25,12 +25,12 @@ public class MainController {
 	// Proxy 변수
 	private Proxy proxy;
 
-	private MainController() {
+	private NextgramController() {
 
 		this.proxy = new Proxy();
 	}
 
-	public static MainController getInstance() {
+	public static NextgramController getInstance() {
 		return instance;
 	}
 
@@ -55,7 +55,7 @@ public class MainController {
 			Img_Downloader imgDownLoader = new Img_Downloader(context);
 			for (ContentValues contentValues : contentValuesArr) {
 				imgName = contentValues.getAsString("ImgName");
-				imgDownLoader.copy_img(MainActivity.SERVER_ADDRESS + "image/"
+				imgDownLoader.copy_img(HomeViewer.SERVER_ADDRESS + "image/"
 						+ imgName, imgName);
 				context.getContentResolver().insert(CONTENT_URI, contentValues);
 			}

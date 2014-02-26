@@ -36,7 +36,7 @@ public class Proxy {
 
 	private String getJSON() {
 		try {
-			URL url = new URL(MainActivity.SERVER_ADDRESS + "loadData.php");
+			URL url = new URL(HomeViewer.SERVER_ADDRESS + "loadData.php");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod("GET");

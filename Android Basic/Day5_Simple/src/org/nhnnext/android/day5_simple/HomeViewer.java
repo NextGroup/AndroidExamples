@@ -19,7 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class HomeViewer extends ActionBarActivity {
 	// 서버주소를 관리
 	//public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
 	public static final String SERVER_ADDRESS = "http://scope.hosting.bizfree.kr/next/android/jsonSqlite/";
@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
 	public static int displayW;
 
 	//mainController를 담기위한 변수
-	private MainController mainController;
+	private NextgramController mainController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
 		 *  mainController의 인스턴스를 가져오고 Context를 현재의 Context로 설정 후 
 		 *  mainController의 메서드를 이용해 Database초기화 
 		 */
-		mainController = MainController.getInstance();
+		mainController = NextgramController.getInstance();
 		mainController.setContext(getApplicationContext());
 		mainController.initializeDatabase();
 		
@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
 			//Write item을 클릭할 경우 ArticleWriter로 넘어간다.
 			text = "write";
 			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, ArticleWriter.class);
+			intent.setClass(HomeViewer.this, ArticleWriter.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			break;
@@ -156,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
 		public void onItemClick(AdapterView<?> adapterView, View view,
 				int position, long id) {
 			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, ArticleViewer.class);
+			intent.setClass(HomeViewer.this, ArticleViewer.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("ArticleNumber", view.getTag().toString());
 
