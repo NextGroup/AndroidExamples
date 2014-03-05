@@ -25,15 +25,15 @@
         </activity>
         <activity
             android:name="org.nhnnext.android.day5_simple.WritingArticleView"
-            android:label="Article Writer" >
+            android:label="Writing Article View" >
         </activity>
         <activity
             android:name="org.nhnnext.android.day5_simple.ArticleView"
             android:label="Article Viewer" >
         </activity>
         <service 
-            android:name="LocalService"
-            android:label="LocalService"
+            android:name="SyncDataService"
+            android:label="SyncDataService"
             >
         </service>
         <provider 
