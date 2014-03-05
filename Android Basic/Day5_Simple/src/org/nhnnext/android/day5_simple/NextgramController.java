@@ -87,7 +87,7 @@ public class NextgramController {
 			ImageDownloader imgDownLoader = new ImageDownloader(context);
 			for (ContentValues contentValues : contentValuesArr) {
 				imgName = contentValues.getAsString("ImgName");
-				imgDownLoader.copy_img(HomeViewer.SERVER_ADDRESS + "image/"
+				imgDownLoader.copy_img(HomeView.SERVER_ADDRESS + "image/"
 						+ imgName, imgName);
 				context.getContentResolver().insert(CONTENT_URI, contentValues);
 			}

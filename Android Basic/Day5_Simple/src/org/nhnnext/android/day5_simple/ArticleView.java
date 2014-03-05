@@ -14,7 +14,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class ArticleViewer extends Activity {
+public class ArticleView extends Activity {
 	
 	private Bitmap bitmap;
 	private NextgramController mainController;

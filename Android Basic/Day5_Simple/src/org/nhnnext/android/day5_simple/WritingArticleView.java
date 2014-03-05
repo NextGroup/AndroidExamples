@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class PostArticleViewer extends Activity implements OnClickListener {
+public class WritingArticleView extends Activity implements OnClickListener {
 
 	private static final int REQUEST_PHOTO_ALBUM = 1;
 
@@ -82,7 +82,7 @@ public class PostArticleViewer extends Activity implements OnClickListener {
 					handler.post(new Runnable() {
 						public void run() {
 							progressDialog = ProgressDialog.show(
-									PostArticleViewer.this, "", "업로드 중입니다.");
+									WritingArticleView.this, "", "업로드 중입니다.");
 						}
 					});
 

@@ -19,7 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class HomeViewer extends ActionBarActivity {
+public class HomeView extends ActionBarActivity {
 	// 서버주소를 관리
 	//public static final String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
 	public static final String SERVER_ADDRESS = "http://scope.hosting.bizfree.kr/next/android/jsonSqlite/";
@@ -54,7 +54,7 @@ public class HomeViewer extends ActionBarActivity {
 		/*
 		 * 서비스를 실행하는 코드 startService(Intent)를 이용해 시작한다.
 		 */
-		Intent intent = new Intent(this, LocalService.class);
+		Intent intent = new Intent(this, SyncDataService.class);
 		startService(intent);
 
 	}
@@ -86,7 +86,7 @@ public class HomeViewer extends ActionBarActivity {
 			//Write item을 클릭할 경우 ArticleWriter로 넘어간다.
 			text = "write";
 			Intent intent = new Intent();
-			intent.setClass(HomeViewer.this, PostArticleViewer.class);
+			intent.setClass(HomeView.this, WritingArticleView.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			break;
@@ -132,7 +132,7 @@ public class HomeViewer extends ActionBarActivity {
 	 * 이 예제에서는 Day2에서 사용하였던 Custom List를 사용합니다.
 	 */
 	private void listViewSimple1(ArrayList<ArticleDTO> articles) {
-		CustomAdapter customAdapter = new CustomAdapter(this,
+		HomeViewAdapter customAdapter = new HomeViewAdapter(this,
 				R.layout.custom_list_row, articles);
 		mainListView1.setAdapter(customAdapter);
 		mainListView1.setOnItemClickListener(itemClickListener);
@@ -146,7 +146,7 @@ public class HomeViewer extends ActionBarActivity {
 		public void onItemClick(AdapterView<?> adapterView, View view,
 				int position, long id) {
 			Intent intent = new Intent();
-			intent.setClass(HomeViewer.this, ArticleViewer.class);
+			intent.setClass(HomeView.this, ArticleView.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("ArticleNumber", view.getTag().toString());
 
