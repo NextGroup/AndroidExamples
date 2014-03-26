@@ -4,15 +4,13 @@ package org.nhnnext.android.androidnaming;
 
 import java.io.File;
 
-import org.nhnnext.android.day3_simple.R;
-
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 public class ArticleView extends Activity {
 	

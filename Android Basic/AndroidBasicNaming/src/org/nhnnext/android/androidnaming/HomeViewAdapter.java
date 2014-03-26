@@ -2,8 +2,6 @@ package org.nhnnext.android.androidnaming;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.nhnnext.android.day3_simple.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
