@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:myapp="http://schemas.android.com/apk/res-auto" >
+
+	<item 
+	    android:id="@+id/action_item_refresh"
+	    android:icon="@android:drawable/ic_menu_rotate"
+	    myapp:showAsAction="ifRoom|withText"
+	    android:title="@string/actionbar_refresh"
+	    />
+	<item 
+	    android:id="@+id/action_item_write"
+	    android:icon="@android:drawable/ic_menu_add"
+	    myapp:showAsAction="ifRoom|withText"
+	    android:title="@string/actionbar_write"
+	    />
+</menu>
