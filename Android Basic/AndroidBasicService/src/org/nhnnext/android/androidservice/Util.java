@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

@@ -8,15 +8,14 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
+import android.util.Log;
 import android.view.Display;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 public class HomeView extends ActionBarActivity {
@@ -27,10 +26,10 @@ public class HomeView extends ActionBarActivity {
 	public static String FILES_DIR;
 	public static String DEVICE_ID;
 	public static int displayW;
+	public static int articleNumber=0;
 	
 	private Proxy proxy;
 	private Dao dao;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class HomeView extends ActionBarActivity {
 	
 	private final Handler mHandler = new Handler();
 	private void refreshData() {
-		
+		Log.i("DEBUG", "RefreshDAta");
 		new Thread() {
 			public void run() {
 				String jsonData = proxy.getJSON();

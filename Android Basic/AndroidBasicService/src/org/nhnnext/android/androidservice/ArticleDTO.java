@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 
 public class ArticleDTO {

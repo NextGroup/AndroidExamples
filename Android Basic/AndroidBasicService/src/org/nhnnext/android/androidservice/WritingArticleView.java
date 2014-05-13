@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 
 import java.io.File;
@@ -83,22 +83,15 @@ public class WritingArticleView extends Activity {
 								Util.getDate(),
 								fileName);
 						
-			        	ArticleWritingProxy proxyUP = new ArticleWritingProxy();
+			        	ArticleWritingProxy proxyUP = new ArticleWritingProxy(getApplicationContext());
 			        	proxyUP.uploadArticle(article, filePath);
 			        	
 						handler.post(new Runnable() {
 							public void run() {
 								progressDialog.cancel();
-								
-								//
-								//
-								//
-								
 					        	finish();
 							}
 						});
-			        	
-	        	
 					}
 				}.start();
 			}

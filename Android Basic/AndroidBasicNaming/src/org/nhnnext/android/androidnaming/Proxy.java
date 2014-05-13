@@ -10,11 +10,11 @@ import android.util.Log;
  *  HTTP로 외부의 데이터를 반환하는 클래스
  */
 public class Proxy {
- 
 	
 	public String getJSON() {
 		try {
-			URL url = new URL(HomeView.SERVER_ADDRESS + "loadData.php");
+			URL url = new URL(HomeView.SERVER_ADDRESS + "loadData.php?articleNumber="
+					+ HomeView.articleNumber);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("GET");

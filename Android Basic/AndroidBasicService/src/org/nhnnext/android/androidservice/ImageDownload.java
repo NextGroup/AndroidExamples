@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 import java.io.BufferedInputStream;
 import java.io.File;

@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,13 +10,26 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
  * HttpURLConnection을 이용해 POST방식으로 게시글을 업로드 하는 클래스
  */
 public class ArticleWritingProxy {
-
+	String serverUrl;
+	SharedPreferences pref;
+	Context context;
+	
+	public ArticleWritingProxy(Context context) {
+		this.context = context;
+		String prefName = context.getResources().getString(R.string.pref_name);
+		pref = context.getSharedPreferences(prefName, context.MODE_PRIVATE);
+		serverUrl = pref.getString(
+				context.getResources().getString(R.string.server_url), "");
+	}
+	
 	public void uploadArticle(final ArticleDTO article, final String filePath) {
 		
 		String uploadMessage = postToServer(article, filePath);
@@ -42,7 +55,8 @@ public class ArticleWritingProxy {
 			
 			FileInputStream fis = new FileInputStream(filePath);
 			
-			URL url = new URL(HomeView.SERVER_ADDRESS + "upload.php");
+			URL url = new URL(serverUrl + "upload.php");
+			
 			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");

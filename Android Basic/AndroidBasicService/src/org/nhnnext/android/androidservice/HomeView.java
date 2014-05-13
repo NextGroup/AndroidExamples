@@ -1,10 +1,9 @@
-package org.nhnnext.android.androidnaming;
+package org.nhnnext.android.androidservice;
 
 import java.util.ArrayList;
 
-import org.nhnnext.android.androidservice.R;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -28,6 +27,7 @@ public class HomeView extends ActionBarActivity {
 	public static String DEVICE_ID;
 	public static int displayW;
 	
+	private SharedPreferences pref;
 	private Proxy proxy;
 	private Dao dao;
 	
@@ -36,19 +36,31 @@ public class HomeView extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//strings.xml에서 값 가져오는 방법도 피피티에 넣기
+		pref = getSharedPreferences(getResources().getString(R.string.pref_name), MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
 		
+		editor.putString(getResources().getString(R.string.server_url), getResources().getString(R.string.server_url_value));
 		
-		FILES_DIR = getApplicationContext().getFilesDir().getPath() + "/";
+		editor.putString(getResources().getString(R.string.pref_article_number), "0");
+		editor.commit();
+		// 아이디가 들어갈 것을 가정을하자
+		
+		editor.putString(getResources().getString(R.string.files_directory), getApplicationContext().getFilesDir().getPath() + "/");
+		//FILES_DIR = getApplicationContext().getFilesDir().getPath() + "/";
 		
 		String androidID = Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-		DEVICE_ID = Util.getMD5Hash(androidID);
+		editor.putString(getResources().getString(R.string.device_id), Util.getMD5Hash(androidID));
+		editor.commit();
+		
+		//DEVICE_ID = Util.getMD5Hash(androidID);
 		
 		Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 		displayW = display.getWidth();
 		
 		mainListView1 = (ListView)findViewById(R.id.main_listView1);
 		
-		proxy = new Proxy();
+		proxy = new Proxy(getApplicationContext());
 		dao = new Dao(getApplicationContext());
 		
 	}
@@ -64,7 +76,7 @@ public class HomeView extends ActionBarActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		//refreshData();
+		refreshData();
 	}
 	
 	@Override

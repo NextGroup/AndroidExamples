@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
-            android:name="org.nhnnext.android.androidnaming.HomeView"
+            android:name="org.nhnnext.android.androidservice.HomeView"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +25,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.nhnnext.android.androidnaming.WritingArticleView"
+            android:name="org.nhnnext.android.androidservice.WritingArticleView"
             android:label="Article Writer" >
         </activity>
         <activity
-            android:name="org.nhnnext.android.androidnaming.ArticleView"
+            android:name="org.nhnnext.android.androidservice.ArticleView"
             android:label="Article Viewer" >
         </activity>
         

@@ -73,6 +73,10 @@ public class Dao {
 			writeDate = jObj.getString("WriteDate");
 			imgName = jObj.getString("ImgName");
 			
+			// Article Number를 기억하자
+			if (i == jArr.length() - 1) {
+				HomeView.articleNumber = articleNumber;
+			}
 			try {
 				title = URLDecoder.decode(title,"UTF-8");
 				writer = URLDecoder.decode(writer,"UTF-8");
