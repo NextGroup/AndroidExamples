@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -46,7 +46,7 @@ public class ArticleWritingProxy {
 		String message = "";
 		
 		
-		String deviceID = HomeView.DEVICE_ID;
+		String deviceID = pref.getString(context.getResources().getString(R.string.device_id), "");
 		long uploadTime = Util.getMilliTime();
 		
 		String fileName = deviceID + uploadTime + "_" + article.getImgName();

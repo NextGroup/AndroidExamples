@@ -76,7 +76,6 @@ public class Util {
 		}
 		return filePathUri;
 	}
-
 	public static int getSampleSize(String bitmapPath) {
 		BitmapFactory.Options optionsCheck = new BitmapFactory.Options();
 		optionsCheck.inJustDecodeBounds = true;
@@ -84,5 +83,4 @@ public class Util {
 
 		return optionsCheck.outWidth / HomeView.displayW;
 	}
-
 }

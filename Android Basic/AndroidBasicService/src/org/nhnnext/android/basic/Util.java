@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -77,12 +77,12 @@ public class Util {
 		return filePathUri;
 	}
 
-	public static int getSampleSize(String bitmapPath) {
+	public static int getOutWidthSize(String bitmapPath) {
 		BitmapFactory.Options optionsCheck = new BitmapFactory.Options();
 		optionsCheck.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(bitmapPath, optionsCheck);
 
-		return optionsCheck.outWidth / HomeView.displayW;
+		return optionsCheck.outWidth;
 	}
 
 }

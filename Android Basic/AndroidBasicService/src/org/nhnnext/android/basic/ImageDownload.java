@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,21 +27,24 @@ import java.net.URLConnection;
 import org.apache.http.util.ByteArrayBuffer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 
 public class ImageDownload {
 	private final Context context;
+	private SharedPreferences pref;
 	
 	// 임시로 전에 만들었던 클래스 붙여서 테스트중임
 	public ImageDownload(Context context) {
 		this.context = context;
+		this.pref = context.getSharedPreferences(context.getString(R.string.pref_name), context.MODE_PRIVATE);
 	}
 
 	public void copy_img(String url, String save_name) {
 
 		File img_cache_path;
 
-		img_cache_path = new File(HomeView.FILES_DIR + save_name);
+		img_cache_path = new File(pref.getString(context.getString(R.string.files_directory), "") + save_name);
 		if (!img_cache_path.exists()) {
 
 			// ************************************

@@ -1,14 +1,14 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.nhnnext.android.androidservice.R;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class WritingArticleView extends Activity {
-
+	private Context context;
 	private static final int REQUEST_PHOTO_ALBUM = 1;
 	
 	private EditText etWriter;
@@ -39,11 +39,13 @@ public class WritingArticleView extends Activity {
 	private Bitmap bitmap;
 	private Bitmap bitmap2;
 	
+	private SharedPreferences pref;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.write_article);
-		
+		context = getApplicationContext();
 		etWriter = (EditText)findViewById(R.id.write_article_editText_writer);
 		etTitle = (EditText)findViewById(R.id.write_article_editText_title);
 		etContent = (EditText)findViewById(R.id.write_article_editText_content);
@@ -60,6 +62,10 @@ public class WritingArticleView extends Activity {
 		  		startActivityForResult(intent, REQUEST_PHOTO_ALBUM);
 			}
 		});
+		String prefName = context.getResources().getString(R.string.pref_name);
+		pref = context.getSharedPreferences(prefName, context.MODE_PRIVATE);
+		
+		
 		
 		Button buUpload = (Button) findViewById(R.id.write_article_button1);
 		buUpload.setOnClickListener(new OnClickListener() {
@@ -78,7 +84,7 @@ public class WritingArticleView extends Activity {
 						ArticleDTO article = new ArticleDTO(0,
 								etTitle.getText().toString(),
 								etWriter.getText().toString(),
-								HomeView.DEVICE_ID,
+								pref.getString(context.getString(R.string.device_id), ""),
 								etContent.getText().toString(),
 								Util.getDate(),
 								fileName);
@@ -120,8 +126,7 @@ public class WritingArticleView extends Activity {
   			
   			recycleBitmap();
   			
-  			
-  			int sampleSize = Util.getSampleSize(uri.toString());
+  			int sampleSize = Util.getOutWidthSize(uri.toString())/pref.getInt(context.getString(R.string.display_width), 0);
   			BitmapFactory.Options options = new BitmapFactory.Options();
   			options.inPurgeable = true;
   			options.inSampleSize = sampleSize;
@@ -134,9 +139,10 @@ public class WritingArticleView extends Activity {
 				bitmap = BitmapFactory.decodeFile(uri.toString(), options);
 				
 				Util util = new Util();
-				bitmap = util.resizeBitmapImage(bitmap,HomeView.displayW);
+				bitmap = util.resizeBitmapImage(bitmap, pref.getInt(context.getString(R.string.display_width), 1));
+				String fileDirecotry = pref.getString(context.getString(R.string.files_directory), "");
 				
-				File file = new File(HomeView.FILES_DIR+".temp.jpg");
+				File file = new File(fileDirecotry+".temp.jpg");
 				
 				if(file.exists()) {
 					file.delete();
@@ -145,7 +151,7 @@ public class WritingArticleView extends Activity {
 				FileOutputStream fos = new FileOutputStream(file);
 				
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos);
-				filePath = HomeView.FILES_DIR+".temp.jpg";
+				filePath = fileDirecotry+".temp.jpg";
 				Log.i("test","save Comp");
 			} catch (Exception e) {
 				Log.e("test", "OutOfMemoryError:"+e);

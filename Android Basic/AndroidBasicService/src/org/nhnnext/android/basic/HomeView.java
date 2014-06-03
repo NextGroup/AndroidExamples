@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.util.ArrayList;
 
@@ -22,10 +22,10 @@ public class HomeView extends ActionBarActivity {
 
 	private ListView mainListView1;
 	
-	public static String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
-	public static String FILES_DIR;
-	public static String DEVICE_ID;
-	public static int displayW;
+	//public static String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
+	//public static String FILES_DIR;
+	//public static String DEVICE_ID;
+	//public static int displayW;
 	
 	private SharedPreferences pref;
 	private Proxy proxy;
@@ -45,18 +45,14 @@ public class HomeView extends ActionBarActivity {
 		editor.putString(getResources().getString(R.string.pref_article_number), "0");
 		editor.commit();
 		// 아이디가 들어갈 것을 가정을하자
-		
 		editor.putString(getResources().getString(R.string.files_directory), getApplicationContext().getFilesDir().getPath() + "/");
 		//FILES_DIR = getApplicationContext().getFilesDir().getPath() + "/";
-		
 		String androidID = Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 		editor.putString(getResources().getString(R.string.device_id), Util.getMD5Hash(androidID));
-		editor.commit();
-		
 		//DEVICE_ID = Util.getMD5Hash(androidID);
-		
 		Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-		displayW = display.getWidth();
+		editor.putInt(getResources().getString(R.string.display_width), display.getWidth());
+		editor.commit();
 		
 		mainListView1 = (ListView)findViewById(R.id.main_listView1);
 		
@@ -87,7 +83,12 @@ public class HomeView extends ActionBarActivity {
 			break;
 		case R.id.action_item_write:
 			Intent intent = new Intent();
-    		intent.setClass(HomeView.this, WritingArticleView.class);
+			
+    		// 이전의 코드
+			// intent.setClass(HomeView.this, WritingArticleView.class);
+			
+			intent.setAction("org.nhnnext.android.androidservice.WritingArticle");
+			
     		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent);
 			break;
@@ -127,7 +128,12 @@ public class HomeView extends ActionBarActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
         {
         	Intent intent = new Intent();
-    		intent.setClass(HomeView.this, ArticleView.class);
+        	
+        	
+        	// 이전의 코드
+    		//intent.setClass(HomeView.this, ArticleView.class);
+    		intent.setAction("org.nhnnext.android.androidservice.Article");
+    		
     		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		intent.putExtra("ArticleNumber",view.getTag().toString());
     		

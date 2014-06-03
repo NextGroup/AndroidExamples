@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -30,7 +30,8 @@ public class Dao {
 	public Dao(Context context) {
 
 		this.context = context;
-		this.serverUrl = context.getResources().getString(R.string.server_url_value);
+		this.serverUrl = context.getResources().getString(
+				R.string.server_url_value);
 		sqLiteInitialize();
 		if (!isTableExist()) {
 			tableCreate();
@@ -51,8 +52,7 @@ public class Dao {
 				+ TABLE_NAME
 				+ "(_id integer primary key autoincrement, ArticleNumber integer UNIQUE not null, Title text not null, Writer text not null, Id text not null, Content text not null, WriteDate text not null, ImgName text UNIQUE not null);";
 		database.execSQL(sql);
-		
-		
+
 	}
 
 	public void insertJsonData(String jsonData) {
@@ -65,7 +65,7 @@ public class Dao {
 		String content;
 		String writeDate;
 		String imgName;
-		Log.i("[Info]", "json Data : "+jsonData );
+		Log.i("[Info]", "json Data : " + jsonData);
 		try {
 			jArr = new JSONArray(jsonData);
 			Log.i("Dao", "Hi Dao");
@@ -80,19 +80,20 @@ public class Dao {
 				content = jObj.getString("Content");
 				writeDate = jObj.getString("WriteDate");
 				imgName = jObj.getString("ImgName");
-				
-				String prefName = context.getResources().getString(R.string.pref_name);
-				pref = context.getSharedPreferences(prefName,context.MODE_PRIVATE);
-				
-				// Article Number를 기억하자
+
+				// 이곳에 코드 추가
 				if (i == jArr.length() - 1) {
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString(
-							context.getResources().getString(R.string.pref_article_number), ""+ articleNumber);
-					editor.commit();
-					String articleNumberString = context.getResources().getString(R.string.pref_article_number);
+					String prefName = context.getResources().getString(
+							R.string.pref_name);
+					pref = context.getSharedPreferences(prefName,
+							context.MODE_PRIVATE);
+
+					String prefArticleNumberKey = context.getResources()
+							.getString(R.string.pref_article_number);
 					
-					Log.i("Dao","Last articleNumber : "+ pref.getString(articleNumberString, "00"));
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putString(prefArticleNumberKey, "" + articleNumber);
+					editor.commit();
 				}
 
 				try {
@@ -116,8 +117,7 @@ public class Dao {
 				values.put("ImgName", imgName);
 				database.insert(TABLE_NAME, null, values);
 
-				imgDownLoader.copy_img(serverUrl + "image/"
-						+ imgName, imgName);
+				imgDownLoader.copy_img(serverUrl + "image/" + imgName, imgName);
 
 			}
 

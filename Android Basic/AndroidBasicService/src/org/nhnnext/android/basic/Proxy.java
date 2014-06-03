@@ -1,4 +1,4 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,11 +29,14 @@ public class Proxy {
 
 	public String getJSON() {
 		try {
-			String articleNumber = pref.getString(context.getResources()
-					.getString(R.string.pref_article_number), "0");
-			Log.i("Dao", "ArticleNumber : doing getJson " + articleNumber);
+			String prefArticleNumberKey = context.getResources()
+					.getString(R.string.pref_article_number);
+			
+			String articleNumber = pref.getString(prefArticleNumberKey, "0");
+			
 			String serverUrl = this.serverUrl + "loadData.php/?articleNumber="
 					+ articleNumber;
+			
 			URLEncoder.encode(serverUrl, "UTF-8");
 			URL url = new URL(serverUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();

@@ -1,11 +1,10 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.nhnnext.android.androidservice.R;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ public class HomeViewAdapter extends ArrayAdapter<ArticleDTO> {
 	private int layoutResourceId;
 	private ArrayList<ArticleDTO> articleData;
 
+	private SharedPreferences pref;
 	/*
 	 * step3
 	 * 커스텀 어댑터는 컨택스트정보, 레이아웃Id, 리스트에 표시할 데이터가 필요합니다.
@@ -32,6 +32,7 @@ public class HomeViewAdapter extends ArrayAdapter<ArticleDTO> {
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.articleData = articleData;
+		pref = context.getSharedPreferences(context.getString(R.string.pref_name), context.MODE_PRIVATE);
 	}
 
 	/*
@@ -59,7 +60,7 @@ public class HomeViewAdapter extends ArrayAdapter<ArticleDTO> {
 		tvName.setText(articleData.get(position).getWriter());
 		tvVillage.setText(articleData.get(position).getTitle());
 		
-    	String img_path = HomeView.FILES_DIR + articleData.get(position).getImgName();
+    	String img_path = pref.getString(context.getString(R.string.files_directory), "") + articleData.get(position).getImgName();
         File img_load_path = new File(img_path);
         
         if (img_load_path.exists()) {
@@ -69,7 +70,7 @@ public class HomeViewAdapter extends ArrayAdapter<ArticleDTO> {
   			
         	Bitmap bitmap = BitmapFactory.decodeFile(img_path, options);
         	Util util = new Util();
- 			imageView.setImageBitmap(util.resizeBitmapImage(bitmap,HomeView.displayW/4));
+ 			imageView.setImageBitmap(util.resizeBitmapImage(bitmap, pref.getInt(context.getString(R.string.display_width), 1)/4));
 			bitmap.recycle();
 			bitmap = null;
 			

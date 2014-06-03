@@ -12,6 +12,7 @@
     <string name="server_url">ServerURL</string>
     <string name="device_id">DeviceID</string>
     <string name="files_directory">FileDirectory</string>
+    <string name="display_width">DisplayWidth</string>
     
     <string name="pref_article_number">ArticleNumber</string>
     <string name="server_url_value">http://10.73.44.93/~stu20/</string>

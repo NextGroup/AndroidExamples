@@ -1,12 +1,12 @@
-package org.nhnnext.android.androidservice;
+package org.nhnnext.android.basic;
 
 
 
 import java.io.File;
 
-import org.nhnnext.android.androidservice.R;
-
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,12 +17,16 @@ import android.widget.TextView;
 public class ArticleView extends Activity {
 	
 	private Bitmap bitmap;
+	private SharedPreferences pref;
+	private Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_article);
 		
+		context = getApplicationContext();
 		
+		pref = context.getSharedPreferences(context.getString(R.string.pref_name), context.MODE_PRIVATE);
 		
 		Dao dao = new Dao(getApplicationContext());
 		
@@ -44,12 +48,12 @@ public class ArticleView extends Activity {
 		tvContent.setText(article.getContent());
 		tvWriteDate.setText(article.getWriteDate());
 		
-		String img_path = HomeView.FILES_DIR + article.getImgName();
+		String img_path = pref.getString(context.getString(R.string.files_directory), "") + article.getImgName();
         File img_load_path = new File(img_path);
         
         if (img_load_path.exists()) {
         	
-        	int sampleSize = Util.getSampleSize(img_path);
+        	int sampleSize = Util.getOutWidthSize(img_path)/pref.getInt(context.getString(R.string.display_width), 0);
         	
   			BitmapFactory.Options options = new BitmapFactory.Options();
   			options.inPurgeable = true;
@@ -58,7 +62,7 @@ public class ArticleView extends Activity {
   			
         	bitmap = BitmapFactory.decodeFile(img_path, options);
 			Util util = new Util();
-			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap,HomeView.displayW));
+			ivImage.setImageBitmap(util.resizeBitmapImage(bitmap, pref.getInt(context.getString(R.string.display_width), 0)));
 			
 		}
         
