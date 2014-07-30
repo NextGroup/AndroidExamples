@@ -56,7 +56,7 @@ public class Dao {
 	}
 
 	public void insertJsonData(String jsonData) {
-
+		
 		JSONArray jArr;
 		int articleNumber;
 		String title;

@@ -21,12 +21,6 @@ import android.widget.ListView;
 public class HomeView extends ActionBarActivity {
 
 	private ListView mainListView1;
-	
-	//public static String SERVER_ADDRESS = "http://10.73.44.93/~stu20/";
-	//public static String FILES_DIR;
-	//public static String DEVICE_ID;
-	//public static int displayW;
-	
 	private SharedPreferences pref;
 	private Proxy proxy;
 	private Dao dao;
@@ -36,7 +30,6 @@ public class HomeView extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//strings.xml에서 값 가져오는 방법도 피피티에 넣기
 		pref = getSharedPreferences(getResources().getString(R.string.pref_name), MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 		
@@ -59,9 +52,28 @@ public class HomeView extends ActionBarActivity {
 		proxy = new Proxy(getApplicationContext());
 		dao = new Dao(getApplicationContext());
 		
+		/*
+		 * 서비스를 실행하는 코드 startService(Intent)를 이용해 시작한다.
+		 */
+		//Intent intent = new Intent(this, SyncDataService.class);
+		//startService(intent);
+		
+		/*
+		 * 암시적 인텐트를 활용한 서비스 시작 예제
+		 */
+		Intent implictIntent = new Intent();
+		implictIntent.setAction("org.nhnnext.android.android.basic.SyncDataService");
+		startService(implictIntent);
 	}
 	
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+	}
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -83,12 +95,7 @@ public class HomeView extends ActionBarActivity {
 			break;
 		case R.id.action_item_write:
 			Intent intent = new Intent();
-			
-    		// 이전의 코드
-			// intent.setClass(HomeView.this, WritingArticleView.class);
-			
-			intent.setAction("org.nhnnext.android.androidservice.WritingArticle");
-			
+			intent.setAction("org.nhnnext.android.basic.WritingArticle");
     		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		startActivity(intent);
 			break;
@@ -129,10 +136,7 @@ public class HomeView extends ActionBarActivity {
         {
         	Intent intent = new Intent();
         	
-        	
-        	// 이전의 코드
-    		//intent.setClass(HomeView.this, ArticleView.class);
-    		intent.setAction("org.nhnnext.android.androidservice.Article");
+    		intent.setAction("org.nhnnext.android.basic.Article");
     		
     		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     		intent.putExtra("ArticleNumber",view.getTag().toString());
