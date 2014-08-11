@@ -5,6 +5,7 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -29,32 +30,43 @@
             android:label="Article Writer" >
             <intent-filter>
                 <action android:name="org.nhnnext.android.basic.WritingArticle" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity	
-            android:name="org.nhnnext.android.android.basic.ArticleView"
+        <activity
+            android:name="org.nhnnext.android.basic.ArticleView"
             android:label="Article Viewer" >
             <intent-filter>
-                <action android:name="org.nhnnext.android.android.basic.Article" />
+                <action android:name="org.nhnnext.android.basic.Article" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <!-- 
+
+        <!--
             - Manifest 의 exported 속성은 Activity, Activity-alias, Provider, Service, Receiver 에 적용할 수 있는 속성입니다. 
             - 다른 컴포넌트에서 외부 어플리케이션의 컴포넌트에서 실행 가능 여부를 나타내는 속성입니다.
 			- exported 값이 false 이면 같은 어플리케이션 내부에서만 해당 컴포넌트를 호출 가능합니다.
         -->
-        <service 
-            android:name="org.nhnnext.android.basic.SyncDataService" android:exported="false">
-        	<intent-filter>
+        <service
+            android:name="org.nhnnext.android.basic.SyncDataService"
+            android:exported="false" >
+            <intent-filter>
                 <action android:name="org.nhnnext.android.android.basic.SyncDataService" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        
+
+        <provider
+            android:enabled="true"
+            android:name=".NextgramProvider"
+            android:authorities="org.nhnnext.nextgram.provider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:readPermission="org.nhnnext.nextgram.provider.READ"
+            android:writePermission="org.nhnnext.nextgram.provider.WRITE" />
     </application>
 
 </manifest>
