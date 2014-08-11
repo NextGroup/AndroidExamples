@@ -52,7 +52,7 @@ public class SyncDataService extends Service{
 		};
 		
 		mTimer = new Timer();
-		mTimer.schedule(mTask, 1000*5, 1000*5);
+		mTimer.schedule(mTask, 1*MINUTE, 1000*MINUTE);
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
