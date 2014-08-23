@@ -1,6 +1,7 @@
 package org.nhnnext.android.basic;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -9,17 +10,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 
 /**
  * SQLite의 입출력을 담당하는 클래스
  */
-public class Dao {
+public class ProviderDao {
 
 	private SQLiteDatabase database;
 	private final String TABLE_NAME = "Articles";
@@ -27,36 +32,14 @@ public class Dao {
 	private SharedPreferences pref;
 	private String serverUrl;
 
-	public Dao(Context context) {
-
+	public ProviderDao(Context context) {
 		this.context = context;
 		this.serverUrl = context.getResources().getString(
 				R.string.server_url_value);
-		sqLiteInitialize();
-		if (!isTableExist()) {
-			tableCreate();
-		}
-	}
-
-	// SQLite 초기화
-	private void sqLiteInitialize() {
-		database = context.openOrCreateDatabase("sqliteTest.db",
-				SQLiteDatabase.CREATE_IF_NECESSARY, null);
-		database.setLocale(Locale.getDefault());
-		database.setVersion(1);
-	}
-
-	// 테이블 생성
-	private void tableCreate() {
-		String sql = "create table "
-				+ TABLE_NAME
-				+ "(_id integer primary key autoincrement, ArticleNumber integer UNIQUE not null, Title text not null, Writer text not null, Id text not null, Content text not null, WriteDate text not null, ImgName text UNIQUE not null);";
-		database.execSQL(sql);
-
 	}
 
 	public void insertJsonData(String jsonData) {
-		
+
 		JSONArray jArr;
 		int articleNumber;
 		String title;
@@ -90,7 +73,7 @@ public class Dao {
 
 					String prefArticleNumberKey = context.getResources()
 							.getString(R.string.pref_article_number);
-					
+
 					SharedPreferences.Editor editor = pref.edit();
 					editor.putString(prefArticleNumberKey, "" + articleNumber);
 					editor.commit();
@@ -115,8 +98,12 @@ public class Dao {
 				values.put("Content", content);
 				values.put("WriteDate", writeDate);
 				values.put("ImgName", imgName);
+
+				// 기존의 Dao.java에서 작성된 코드.
+				// database.insert(TABLE_NAME, null, values);
 				
-				database.insert(TABLE_NAME, null, values);
+				context.getContentResolver().insert(
+						NextgramContract.Articles.CONTENT_URI, values);
 
 				imgDownLoader.copy_img(serverUrl + "image/" + imgName, imgName);
 
@@ -141,28 +128,36 @@ public class Dao {
 		String writeDate;
 		String imgName;
 
-		if (isTableExist()) {
-			Cursor cursor = database.query(TABLE_NAME, null, null, null, null,
-					null, "_id");
-			if (cursor != null) {
-				cursor.moveToFirst();
-				while (!(cursor.isAfterLast())) {
-					articleNumber = cursor.getInt(1);
-					title = cursor.getString(2);
-					writer = cursor.getString(3);
-					id = cursor.getString(4);
-					content = cursor.getString(5);
-					writeDate = cursor.getString(6);
-					imgName = cursor.getString(7);
+		// 1. isTableExist() 를 사용하지 않습니다.
+		
+		// 2. 기존의 database.query를 provider를 활용하도록 변경합니다. 
+		//Cursor cursor = database.query(TABLE_NAME, null, null, null, null,
+		//		null, "_id");
+		
+		Cursor cursor = context.getContentResolver().query(
+				NextgramContract.Articles.CONTENT_URI,
+				NextgramContract.Articles.PROJECTION_ALL, null, null,
+				NextgramContract.Articles._ID + " asc");
 
-					articleList.add(new ArticleDTO(articleNumber, title,
-							writer, id, content, writeDate, imgName));
-					cursor.moveToNext();
-				}
+		if (cursor != null) {
+			cursor.moveToFirst();
+			while (!(cursor.isAfterLast())) {
+				//3.  column의 index정보가 변경되었으니 0번부터 값을 가져오도록 합시다.
+				articleNumber = cursor.getInt(0);
+				title = cursor.getString(1);
+				writer = cursor.getString(2);
+				id = cursor.getString(3);
+				content = cursor.getString(4);
+				writeDate = cursor.getString(5);
+				imgName = cursor.getString(6);
+
+				articleList.add(new ArticleDTO(articleNumber, title, writer,
+						id, content, writeDate, imgName));
+				cursor.moveToNext();
 			}
-
-			cursor.close();
 		}
+
+		cursor.close();
 
 		return articleList;
 	}
@@ -178,43 +173,36 @@ public class Dao {
 		String writeDate;
 		String imgName;
 
-		if (isTableExist()) {
-			Cursor cursor = database.query(TABLE_NAME, null, "ArticleNumber="
-					+ articleNumber, null, null, null, "_id");
-			if (cursor != null) {
-				cursor.moveToFirst();
+		
+		// 1. isTableExist()를 사용하지 않습니다.
+		
+		// 2. 원하는 데이터에 접근하는 uri를 지정합니다. 
+		Uri contentUri = Uri.parse(NextgramContract.Articles.CONTENT_URI
+				.toString() + "/" + articleNumber);
 
-				articleNumber = cursor.getInt(1);
-				title = cursor.getString(2);
-				writer = cursor.getString(3);
-				id = cursor.getString(4);
-				content = cursor.getString(5);
-				writeDate = cursor.getString(6);
-				imgName = cursor.getString(7);
+		// 3. 기존의 database.query를 provider를 활용하도록 변경합니다.
+		Cursor cursor = context.getContentResolver().query(contentUri,
+				NextgramContract.Articles.PROJECTION_ALL, null,
+				null, NextgramContract.Articles._ID + " asc");
 
-				article = new ArticleDTO(articleNumber, title, writer, id,
-						content, writeDate, imgName);
-			}
+		if (cursor != null) {
+			cursor.moveToFirst();
 
-			cursor.close();
-		}
+			articleNumber = cursor.getInt(0);
+			title = cursor.getString(1);
+			writer = cursor.getString(2);
+			id = cursor.getString(3);
+			content = cursor.getString(4);
+			writeDate = cursor.getString(5);
+			imgName = cursor.getString(6);
 
-		return article;
-	}
-
-	// DB에 테이블이 생성되어 있는지 확인
-	private boolean isTableExist() {
-		String searchTable = "select DISTINCT tbl_name from sqlite_master where tbl_name = '"
-				+ TABLE_NAME + "';";
-		Cursor cursor = database.rawQuery(searchTable, null);
-
-		if (cursor.getCount() == 0) {
-			return false;
+			article = new ArticleDTO(articleNumber, title, writer, id, content,
+					writeDate, imgName);
 		}
 
 		cursor.close();
 
-		return true;
+		return article;
 	}
 
 }

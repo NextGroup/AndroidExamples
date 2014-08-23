@@ -23,7 +23,8 @@ public class HomeView extends ActionBarActivity {
 	private ListView mainListView1;
 	private SharedPreferences pref;
 	private Proxy proxy;
-	private Dao dao;
+	private ProviderDao dao;
+	//private Dao dao;
 	
 	
 	@Override
@@ -50,7 +51,9 @@ public class HomeView extends ActionBarActivity {
 		mainListView1 = (ListView)findViewById(R.id.main_listView1);
 		
 		proxy = new Proxy(getApplicationContext());
-		dao = new Dao(getApplicationContext());
+		
+		//dao = new Dao(getApplicationContext());
+		dao = new ProviderDao(getApplicationContext());
 		
 		/*
 		 * 서비스를 실행하는 코드 startService(Intent)를 이용해 시작한다.

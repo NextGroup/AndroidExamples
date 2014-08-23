@@ -28,7 +28,7 @@ public class ArticleView extends Activity {
 		
 		pref = context.getSharedPreferences(context.getString(R.string.pref_name), context.MODE_PRIVATE);
 		
-		Dao dao = new Dao(getApplicationContext());
+		ProviderDao dao = new ProviderDao(getApplicationContext());
 		
 		
 		TextView tvTitle = (TextView)findViewById(R.id.view_article_textView_title);

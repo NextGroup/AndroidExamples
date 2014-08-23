@@ -12,6 +12,7 @@ import android.util.Log;
 
 /**
  * HTTP로 외부의 데이터를 반환하는 클래스
+ * JSON Data를 가져와서 Dao에 전달할 수 있는 객체로 변환해야함.
  */
 public class Proxy {
 	private Context context;

@@ -15,7 +15,8 @@ public class SyncDataService extends Service{
 	// Server에서 Article들을 받아오기 위한 Proxy
 	private Proxy proxy;
 	// 받아온 Article들을 DB에 저장하기 위한 Dao
-	private Dao dao;
+	//private Dao dao;
+	private ProviderDao dao;
 
 	private TimerTask mTask;
 	private Timer mTimer;
@@ -26,7 +27,8 @@ public class SyncDataService extends Service{
 		super.onCreate();
 		
 		proxy = new Proxy(getApplicationContext());
-		dao = new Dao(getApplicationContext());
+		//dao = new Dao(getApplicationContext());
+		dao = new ProviderDao(getApplicationContext());
 		
 	}
 	
@@ -52,7 +54,7 @@ public class SyncDataService extends Service{
 		};
 		
 		mTimer = new Timer();
-		mTimer.schedule(mTask, 1*MINUTE, 1000*MINUTE);
+		mTimer.schedule(mTask, 1*MINUTE, 1*MINUTE);
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
