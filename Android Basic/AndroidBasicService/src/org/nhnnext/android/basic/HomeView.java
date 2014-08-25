@@ -2,13 +2,17 @@ package org.nhnnext.android.basic;
 
 import java.util.ArrayList;
 
+import org.nhnnext.android.basic.HomeViewAdapter.ViewHolderItem;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +71,8 @@ public class HomeView extends ActionBarActivity {
 		Intent implictIntent = new Intent();
 		implictIntent.setAction("org.nhnnext.android.android.basic.SyncDataService");
 		startService(implictIntent);
+		
+		listViewSimple1(dao.getArticleList());
 	}
 	
 	
@@ -116,18 +122,30 @@ public class HomeView extends ActionBarActivity {
 				String jsonData = proxy.getJSON();
 				dao.insertJsonData(jsonData);
 				
+				/* CursorAdapter를 사용할때는 매번 재갱신할 필요가 없습니다.
 				mHandler.post(new Runnable(){
                      public void run() {
                     	 listViewSimple1(dao.getArticleList());
                      }
 				});
+				*/
 				
 			}
 		}.start();
 	}
 	
 	private void listViewSimple1(ArrayList<ArticleDTO> articles) {
-		HomeViewAdapter customAdapter = new HomeViewAdapter(this, R.layout.custom_list_row, articles);
+
+		// 이전의 customAdapter
+		//HomeViewAdapter customAdapter = new HomeViewAdapter(this, R.layout.custom_list_row, articles);
+		
+		Cursor mCursor = getContentResolver().query(
+				NextgramContract.Articles.CONTENT_URI,
+				NextgramContract.Articles.PROJECTION_ALL, null, null,
+				NextgramContract.Articles._ID + " asc");
+		
+		HomeViewAdapter customAdapter = new HomeViewAdapter(this, mCursor, R.layout.custom_list_row);
+		
 		mainListView1.setAdapter(customAdapter);
 		mainListView1.setOnItemClickListener(itemClickListener);
 		
@@ -139,10 +157,10 @@ public class HomeView extends ActionBarActivity {
         {
         	Intent intent = new Intent();
         	
+        	Log.e("TEST", "Aritlce Number : " +((ViewHolderItem)view.getTag()).articleNumber);
     		intent.setAction("org.nhnnext.android.basic.Article");
-    		
     		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    		intent.putExtra("ArticleNumber",view.getTag().toString());
+    		intent.putExtra("ArticleNumber",((ViewHolderItem)view.getTag()).articleNumber);
     		
     		startActivity(intent);
         }
