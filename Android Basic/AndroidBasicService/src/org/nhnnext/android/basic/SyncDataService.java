@@ -20,7 +20,7 @@ public class SyncDataService extends Service{
 
 	private TimerTask mTask;
 	private Timer mTimer;
-	
+	private int i=0;
 	
 	@Override
 	public void onCreate() {
@@ -46,6 +46,8 @@ public class SyncDataService extends Service{
 			@Override
 			public void run() {
 				/* 변경된 부분 */
+				i++;
+				Log.i(TAG, "Service Task "+ i +"번 실행");
 				// Proxy 클래스의 getJSON() 을 통해 json 데이터를 받아온 후
 				String jsonData = proxy.getJSON();
 				// Dao 클래스를 통해 Database에 저장하도록 합니다.
