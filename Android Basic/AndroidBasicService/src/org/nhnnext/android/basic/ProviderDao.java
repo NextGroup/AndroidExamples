@@ -26,8 +26,6 @@ import android.util.Log;
  */
 public class ProviderDao {
 
-	private SQLiteDatabase database;
-	private final String TABLE_NAME = "Articles";
 	private Context context;
 	private SharedPreferences pref;
 	private String serverUrl;

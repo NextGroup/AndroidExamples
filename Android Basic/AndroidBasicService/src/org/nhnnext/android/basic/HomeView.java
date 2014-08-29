@@ -44,10 +44,8 @@ public class HomeView extends ActionBarActivity {
 		editor.commit();
 		// 아이디가 들어갈 것을 가정을하자
 		editor.putString(getResources().getString(R.string.files_directory), getApplicationContext().getFilesDir().getPath() + "/");
-		//FILES_DIR = getApplicationContext().getFilesDir().getPath() + "/";
 		String androidID = Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 		editor.putString(getResources().getString(R.string.device_id), Util.getMD5Hash(androidID));
-		//DEVICE_ID = Util.getMD5Hash(androidID);
 		Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 		editor.putInt(getResources().getString(R.string.display_width), display.getWidth());
 		editor.commit();
@@ -55,8 +53,6 @@ public class HomeView extends ActionBarActivity {
 		mainListView1 = (ListView)findViewById(R.id.main_listView1);
 		
 		proxy = new Proxy(getApplicationContext());
-		
-		//dao = new Dao(getApplicationContext());
 		dao = new ProviderDao(getApplicationContext());
 		
 		/*
