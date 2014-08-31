@@ -28,16 +28,57 @@ public class Proxy {
 				context.getResources().getString(R.string.server_url), "");
 	}
 
+	public ArrayList<ArticleDTO> getArticleDTO() {
+		ArrayList<ArticleDTO> articleList = new ArrayList<ArticleDTO>();
+
+		JSONArray jArr;
+		int articleNumber;
+		String writer;
+		String title;
+		String id;
+		String content;
+		String writeDate;
+		String imgName;
+
+		String jsonData = getJSON();
+		ArticleDTO articleDTO;
+		
+		try {
+			jArr = new JSONArray(jsonData);
+
+			for (int i = 0; i < jArr.length(); ++i) {
+				JSONObject jObj = jArr.getJSONObject(i);
+
+				articleNumber = jObj.getInt("ArticleNumber");
+				title = jObj.getString("Title");
+				writer = jObj.getString("Writer");
+				id = jObj.getString("Id");
+				content = jObj.getString("Content");
+				writeDate = jObj.getString("WriteDate");
+				imgName = jObj.getString("ImgName");
+
+				articleDTO = new ArticleDTO(articleNumber, title, writer, id,
+						content, writeDate, imgName);
+				articleList.add(articleDTO);
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return articleList;
+	}
+
 	public String getJSON() {
 		try {
-			String prefArticleNumberKey = context.getResources()
-					.getString(R.string.pref_article_number);
-			
+			String prefArticleNumberKey = context.getResources().getString(
+					R.string.pref_article_number);
+
 			String articleNumber = pref.getString(prefArticleNumberKey, "0");
-			
+
 			String serverUrl = this.serverUrl + "loadData.php/?articleNumber="
 					+ articleNumber;
-			
+
 			URLEncoder.encode(serverUrl, "UTF-8");
 			URL url = new URL(serverUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
