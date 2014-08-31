@@ -1,5 +1,7 @@
 package org.nhnnext.android.basic;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,8 +34,8 @@ public class HomeController {
 		
 		new Thread() {
 			public void run() {
-				String jsonData = proxy.getJSON();
-				dao.insertJsonData(jsonData);
+				ArrayList<ArticleDTO> articleList = proxy.getArticleDTO();
+				dao.insertData(articleList);
 			}
 		}.start();
 	}
