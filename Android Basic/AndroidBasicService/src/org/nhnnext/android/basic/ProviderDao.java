@@ -36,80 +36,69 @@ public class ProviderDao {
 				R.string.server_url_value);
 	}
 
-	public void insertJsonData(String jsonData) {
+	public void insertData(ArrayList<ArticleDTO> articleList) {
 
-		JSONArray jArr;
 		int articleNumber;
-		String title;
 		String writer;
+
+		String title;
 		String id;
 		String content;
 		String writeDate;
 		String imgName;
-		Log.i("[Info]", "json Data : " + jsonData);
-		try {
-			jArr = new JSONArray(jsonData);
-			Log.i("Dao", "Hi Dao");
-			ImageDownload imgDownLoader = new ImageDownload(context);
-			for (int i = 0; i < jArr.length(); ++i) {
-				JSONObject jObj = jArr.getJSONObject(i);
 
-				articleNumber = jObj.getInt("ArticleNumber");
-				title = jObj.getString("Title");
-				writer = jObj.getString("Writer");
-				id = jObj.getString("Id");
-				content = jObj.getString("Content");
-				writeDate = jObj.getString("WriteDate");
-				imgName = jObj.getString("ImgName");
+		ImageDownload imgDownLoader = new ImageDownload(context);
+		
+		for (int i = 0; i < articleList.size(); ++i) {
+			
+			ArticleDTO articleDTO = articleList.get(i);
+			articleNumber = articleDTO.getArticleNumber();
+			title = articleDTO.getTitle();
+			writer = articleDTO.getWriter();
+			id = articleDTO.getId();
+			content = articleDTO.getContent();
+			writeDate = articleDTO.getWriteDate();
+			imgName = articleDTO.getImgName();
 
-				// 이곳에 코드 추가
-				if (i == jArr.length() - 1) {
-					String prefName = context.getResources().getString(
-							R.string.pref_name);
-					pref = context.getSharedPreferences(prefName,
-							context.MODE_PRIVATE);
+			if (i == articleList.size() - 1) {
+				String prefName = context.getResources().getString(
+						R.string.pref_name);
+				pref = context.getSharedPreferences(prefName,
+						context.MODE_PRIVATE);
 
-					String prefArticleNumberKey = context.getResources()
-							.getString(R.string.pref_article_number);
+				String prefArticleNumberKey = context.getResources().getString(
+						R.string.pref_article_number);
 
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString(prefArticleNumberKey, "" + articleNumber);
-					editor.commit();
-				}
-
-				try {
-					title = URLDecoder.decode(title, "UTF-8");
-					writer = URLDecoder.decode(writer, "UTF-8");
-					id = URLDecoder.decode(id, "UTF-8");
-					content = URLDecoder.decode(content, "UTF-8");
-					writeDate = URLDecoder.decode(writeDate, "UTF-8");
-					imgName = URLDecoder.decode(imgName, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				ContentValues values = new ContentValues();
-				values.put("ArticleNumber", articleNumber);
-				values.put("Title", title);
-				values.put("Writer", writer);
-				values.put("Id", id);
-				values.put("Content", content);
-				values.put("WriteDate", writeDate);
-				values.put("ImgName", imgName);
-
-				// 기존의 Dao.java에서 작성된 코드.
-				// database.insert(TABLE_NAME, null, values);
-				
-				context.getContentResolver().insert(
-						NextgramContract.Articles.CONTENT_URI, values);
-
-				imgDownLoader.copy_img(serverUrl + "image/" + imgName, imgName);
-
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putString(prefArticleNumberKey, "" + articleNumber);
+				editor.commit();
 			}
 
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				title = URLDecoder.decode(title, "UTF-8");
+				writer = URLDecoder.decode(writer, "UTF-8");
+				id = URLDecoder.decode(id, "UTF-8");
+				content = URLDecoder.decode(content, "UTF-8");
+				writeDate = URLDecoder.decode(writeDate, "UTF-8");
+				imgName = URLDecoder.decode(imgName, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			ContentValues values = new ContentValues();
+			values.put("ArticleNumber", articleNumber);
+			values.put("Title", title);
+			values.put("Writer", writer);
+			values.put("Id", id);
+			values.put("Content", content);
+			values.put("WriteDate", writeDate);
+			values.put("ImgName", imgName);
+
+			context.getContentResolver().insert(
+					NextgramContract.Articles.CONTENT_URI, values);
+
+			imgDownLoader.copy_img(serverUrl + "image/" + imgName, imgName);
+
 		}
 
 	}
