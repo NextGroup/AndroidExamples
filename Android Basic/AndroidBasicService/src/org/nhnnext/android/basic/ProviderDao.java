@@ -127,11 +127,11 @@ public class ProviderDao {
 		String imgName;
 
 		// 1. isTableExist() 를 사용하지 않습니다.
-		
-		// 2. 기존의 database.query를 provider를 활용하도록 변경합니다. 
-		//Cursor cursor = database.query(TABLE_NAME, null, null, null, null,
-		//		null, "_id");
-		
+
+		// 2. 기존의 database.query를 provider를 활용하도록 변경합니다.
+		// Cursor cursor = database.query(TABLE_NAME, null, null, null, null,
+		// null, "_id");
+
 		Cursor cursor = context.getContentResolver().query(
 				NextgramContract.Articles.CONTENT_URI,
 				NextgramContract.Articles.PROJECTION_ALL, null, null,
@@ -140,7 +140,7 @@ public class ProviderDao {
 		if (cursor != null) {
 			cursor.moveToFirst();
 			while (!(cursor.isAfterLast())) {
-				//3.  column의 index정보가 변경되었으니 0번부터 값을 가져오도록 합시다.
+				// 3. column의 index정보가 변경되었으니 0번부터 값을 가져오도록 합시다.
 				articleNumber = cursor.getInt(0);
 				title = cursor.getString(1);
 				writer = cursor.getString(2);
@@ -171,17 +171,16 @@ public class ProviderDao {
 		String writeDate;
 		String imgName;
 
-		
 		// 1. isTableExist()를 사용하지 않습니다.
-		
-		// 2. 원하는 데이터에 접근하는 uri를 지정합니다. 
+
+		// 2. 원하는 데이터에 접근하는 uri를 지정합니다.
 		Uri contentUri = Uri.parse(NextgramContract.Articles.CONTENT_URI
 				.toString() + "/" + articleNumber);
 
 		// 3. 기존의 database.query를 provider를 활용하도록 변경합니다.
 		Cursor cursor = context.getContentResolver().query(contentUri,
-				NextgramContract.Articles.PROJECTION_ALL, null,
-				null, NextgramContract.Articles._ID + " asc");
+				NextgramContract.Articles.PROJECTION_ALL, null, null,
+				NextgramContract.Articles._ID + " asc");
 
 		if (cursor != null) {
 			cursor.moveToFirst();
